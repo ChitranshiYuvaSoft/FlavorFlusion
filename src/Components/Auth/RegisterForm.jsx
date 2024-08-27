@@ -56,7 +56,7 @@ const RegisterForm = () => {
           gutterBottom
           variant="h4"
         >
-          Sing In
+          Sing Up
         </Typography>
         <Box
           sx={{
@@ -164,7 +164,7 @@ const RegisterForm = () => {
             },
           }}
         >
-          Learn More
+          Sign Up
         </Button>
         <Button
           size="small"
