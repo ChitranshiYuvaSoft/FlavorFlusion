@@ -4,6 +4,7 @@ import Card from "@mui/material/Card";
 import CardActions from "@mui/material/CardActions";
 import CardContent from "@mui/material/CardContent";
 import Button from "@mui/material/Button";
+import AttachEmailIcon from '@mui/icons-material/AttachEmail';
 import Typography from "@mui/material/Typography";
 import {
   FormControl,
@@ -13,10 +14,10 @@ import {
   InputLabel,
   TextField,
 } from "@mui/material";
-import { AccountCircle } from "@mui/icons-material";
 import Visibility from "@mui/icons-material/Visibility";
 import VisibilityOff from "@mui/icons-material/VisibilityOff";
-import { styled } from '@mui/material/styles';
+import { styled } from "@mui/material/styles";
+import { Link } from "react-router-dom";
 
 const LoginForm = () => {
   const [showPassword, setShowPassword] = React.useState(false);
@@ -27,30 +28,44 @@ const LoginForm = () => {
     event.preventDefault();
   };
 
-
-const CustomLabel = styled('label')(({ theme }) => ({
-  fontSize: '1.5rem', // Adjust the font size here
-  color: 'white'
-}));
+  const CustomLabel = styled("label")(({ theme }) => ({
+    fontSize: "1.5rem", // Adjust the font size here
+    color: "white",
+    letterSpacing: ".2rem"
+  }));
 
   return (
     <Card
       className="login-card"
       sx={{ paddingBlock: "1.5rem", paddingInline: "1rem" }}
     >
-      <CardContent sx={{width:"100%", height:"80%", display:"flex", alignItems:"center", justifyContent:"space-around", flexDirection:"column"}}>
+      <CardContent
+        sx={{
+          width: "100%",
+          height: "60%",
+          display: "flex",
+          alignItems: "start",
+          justifyContent: "space-around",
+          flexDirection: "column",
+        }}
+      >
         <Typography
-          sx={{ fontSize: 14 }}
+          sx={{ letterSpacing: 3 }}
           color="white"
           gutterBottom
-          variant="h2"
+          variant="h4"
         >
           Sing In
         </Typography>
         <Box
-          sx={{width:"100%", display: "flex", alignItems: "flex-end", marginTop: "2rem" }}
+          sx={{
+            width: "100%",
+            display: "flex",
+            alignItems: "flex-end",
+            marginTop: "2rem",
+          }}
         >
-          <AccountCircle
+          <AttachEmailIcon
             sx={{ color: "white", mr: 1, my: 0.5, fontSize: "3rem" }}
           />
           <TextField
@@ -63,7 +78,7 @@ const CustomLabel = styled('label')(({ theme }) => ({
 
         <Box
           sx={{
-            width:"100%", 
+            width: "100%",
             display: "flex",
             alignItems: "flex-center",
             justifyContent: "center",
@@ -88,18 +103,23 @@ const CustomLabel = styled('label')(({ theme }) => ({
             label={<CustomLabel>Password</CustomLabel>}
             variant="standard"
             fullWidth
-            sx={{ color: "white" , fontSize:"1.6rem",
-              '& .MuiOutlinedInput-root': {
-                '&:hover .MuiOutlinedInput-notchedOutline': {
-                  borderColor: 'green', // Change border color on hover
+            sx={{
+              color: "white",
+              fontSize: "60rem",
+              "& .MuiOutlinedInput-root": {
+                "&:hover .MuiOutlinedInput-notchedOutline": {
+                  borderColor: "green", // Change border color on hover
                 },
+              
+              },
+              "& .MuiInputBase-input": {
+                color: "white",
+                fontSize: "1.5rem", // Adjust font size here
               },
               // "&:hover": {
               //   backgroundColor:"white",
               //              color: "white"}
-      }}
-      
-            
+            }}
           />
         </Box>
 
@@ -128,7 +148,7 @@ const CustomLabel = styled('label')(({ theme }) => ({
           />
         </FormControl> */}
       </CardContent>
-      <CardActions>
+      <CardActions sx={{width: "100%", height:"30%", display:"flex", alignItems:"center", justifyContent:"space-around", flexDirection:"column"}}>
         <Button
           size="small"
           variant="contained"
@@ -137,16 +157,40 @@ const CustomLabel = styled('label')(({ theme }) => ({
             paddingBlock: "1rem",
             fontSize: "1.4rem",
             backgroundColor: "#D4AF37",
-            color:"black",
+            color: "black",
             fontWeight: "bold",
             "&:hover": {
-                    backgroundColor: "#0c0a0a",
-                    color: "white"}
+              backgroundColor: "#0c0a0a",
+              color: "white",
+            },
           }}
         >
           Learn More
         </Button>
+        <Button
+          size="small"
+          variant="contained"
+          fullWidth
+          sx={{
+            marginLeft: "0rem !important",
+            paddingBlock: "1rem",
+            fontSize: "1.4rem",
+            backgroundColor: "#fff",
+            color: "black",
+            fontWeight: "bold",
+            "&:hover": {
+              backgroundColor: "#0c0a0a",
+              color: "white",
+            },
+          }}
+        >
+          Login With Google
+        </Button>
       </CardActions>
+      <Box>
+        <Typography align="center" variant="h6">Don't have an account <Link to={'/register'} className="link">Sign Up</Link></Typography>
+        <Typography align="center" variant="h6"><Link to={'/register'} className="link">Forget Password</Link></Typography>
+      </Box>
     </Card>
   );
 };

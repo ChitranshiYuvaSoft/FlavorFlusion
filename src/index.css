@@ -20,8 +20,8 @@ html{
 
 
 /* Auth */
-/* Login Page */
-.login-page{
+/* Login Page & Register Page*/
+.login-page, .register-page{
   width: 100%;
   height: 90vh;
   /* background-color: yellow; */
@@ -34,11 +34,11 @@ html{
   align-items: center;
   justify-content: center;
 }
-.left-login{
+.left-login, .left-register{
   width: 50%;
   height: 100%;
 }
-.right-login{
+.right-login, .right-register{
   width: 50%;
   height: 100%;
   display: flex;
@@ -51,7 +51,20 @@ html{
   background-color: rgba(255, 255, 255, 0.253) !important;
   /* border-right: .2rem solid white; */
   /* border-bottom: .2rem solid white; */
-  position: relative;
+  /* position: relative; */
   /* right: 15%;
   bottom: 3%; */
+}
+
+/* Register Card */
+.register-card{
+  width: 50%;
+  height: 70%;
+  background-color: rgba(255, 255, 255, 0.253) !important;
+}
+.link{
+  color: #2196f3;
+}
+.link:visited{
+  color: #bbdefb;
 }
