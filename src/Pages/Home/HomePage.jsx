@@ -1,43 +1,38 @@
 import React, { useEffect } from "react";
 import { Box } from "@mui/material";
-import RegisterForm from "../../Components/Auth/RegisterForm";
-import { useNavigate } from "react-router-dom";
 import { useSelector } from "react-redux";
+import { useNavigate } from "react-router-dom";
 import Loading from "../../Components/Loading/Loading";
-const RegisterPage = () => {
+const HomePage = () => {
   const navigate = useNavigate();
   const { user, isSuccess, isError, message, isLoading } = useSelector(
     (state) => state.auth
   );
 
   useEffect(() => {
-    if (user && isSuccess) {
-      navigate("/userdashboard");
+    if (!user && !isSuccess) {
+      navigate("/login");
     }
     if (isError && message) {
       alert("Something Went Wrong!!");
     }
   }, [user, isSuccess, isError, message]);
 
-
-  if(isLoading){
+  if (isLoading) {
     return (
       <>
-      <Loading/>
+        <Loading />
       </>
-    )
+    );
   }
 
   return (
     <>
-      <Box className="register-page">
-        <Box className="left-register"></Box>
-        <Box className="right-register">
-          <RegisterForm/>
-        </Box>
+      <Box className="home-page">
+        <Box className="home"></Box>
       </Box>
     </>
   );
 };
 
-export default RegisterPage;
+export default HomePage;

@@ -1,10 +1,10 @@
 import React, { useEffect } from "react";
+// import loginImg from '../../assets/Img/loginImg.png'
 import { Box } from "@mui/material";
-import RegisterForm from "../../Components/Auth/RegisterForm";
-import { useNavigate } from "react-router-dom";
+import LoginForm from "../../Components/Auth/LoginForm";
 import { useSelector } from "react-redux";
-import Loading from "../../Components/Loading/Loading";
-const RegisterPage = () => {
+import { useNavigate } from "react-router-dom";
+const LoginPage = () => {
   const navigate = useNavigate();
   const { user, isSuccess, isError, message, isLoading } = useSelector(
     (state) => state.auth
@@ -22,22 +22,21 @@ const RegisterPage = () => {
 
   if(isLoading){
     return (
-      <>
-      <Loading/>
-      </>
+      <h1>Loading....</h1>
     )
   }
 
+
   return (
     <>
-      <Box className="register-page">
-        <Box className="left-register"></Box>
-        <Box className="right-register">
-          <RegisterForm/>
+      <Box className="user-details-page">
+        <Box className="left-user-details"></Box>
+        <Box className="right-user-details">
+          <LoginForm />
         </Box>
       </Box>
     </>
   );
 };
 
-export default RegisterPage;
+export default LoginPage;

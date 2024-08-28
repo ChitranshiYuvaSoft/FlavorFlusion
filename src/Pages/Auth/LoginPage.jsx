@@ -4,6 +4,7 @@ import { Box } from "@mui/material";
 import LoginForm from "../../Components/Auth/LoginForm";
 import { useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
+import Loading from "../../Components/Loading/Loading";
 const LoginPage = () => {
   const navigate = useNavigate();
   const { user, isSuccess, isError, message, isLoading } = useSelector(
@@ -12,7 +13,7 @@ const LoginPage = () => {
 
   useEffect(() => {
     if (user && isSuccess) {
-      navigate("/userdashboard");
+      navigate("/");
     }
     if (isError && message) {
       alert("Something Went Wrong!!");
@@ -22,7 +23,9 @@ const LoginPage = () => {
 
   if(isLoading){
     return (
-      <h1>Loading....</h1>
+      <>
+      <Loading/>
+      </>
     )
   }
 

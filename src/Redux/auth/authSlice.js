@@ -1,8 +1,11 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import { login } from "./authService";
 
+const userExist = JSON.parse(localStorage.getItem("user"));
+
+
 const initialState = {
-  user: {},
+  user: userExist ? userExist : null,
   isLoading: false,
   isError: false,
   isSuccess: false,
