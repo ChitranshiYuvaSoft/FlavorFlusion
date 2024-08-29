@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import AppBar from "@mui/material/AppBar";
 import Box from "@mui/material/Box";
@@ -17,7 +17,7 @@ import KeyboardArrowRightIcon from "@mui/icons-material/KeyboardArrowRight";
 import { useDispatch, useSelector } from "react-redux";
 import AllUser from "../../Components/Dashboard/ALL-User/AllUser";
 import PersonIcon from "@mui/icons-material/Person";
-import userDefaultImage from "../../assets/Img/userDefaultImage.png";
+import Profile from "../../Components/Dashboard/Profile";
 
 const drawerWidth = 300;
 
@@ -26,11 +26,16 @@ const UserDashboard = () => {
   const [mobileOpen, setMobileOpen] = React.useState(false);
   const [isClosing, setIsClosing] = React.useState(false);
   const { user, isSuccess } = useSelector((state) => state.auth);
-  console.log(user);
+  console.log(user, "from dashboard");
+
+  const token = user.token;
+  console.log(token, "userDashboard");
 
   useEffect(() => {
-    if (!user || !isSuccess) {
+    if (!user && !isSuccess) {
       navigate("/login");
+    } else {
+      navigate("/userdashboard");
     }
   }, [user, isSuccess]);
 
@@ -78,95 +83,76 @@ const UserDashboard = () => {
             <span style={{ color: "#D4AF37" }}>Flavor</span>Fusion
           </Typography>
         </Box>
+
+
         <Box
-          sx={{
-            width: "100%",
-            height: "40%",
-            display: "flex",
-            alignItems: "start",
-            justifyContent: "start",
-            flexDirection: "column",
-          }}
-        >
-          {/* <UserProfile />++++++++++++++++++++++++ */}
-          <List
-            sx={{
-              width: "100%",
-              height: "8.5rem",
-              paddingLeft: "1rem",
-              display: "flex",
-              alignItems: "center",
-              justifyContent: "space-between",
-            }}
-          >
-            <Box
-              sx={{
-                width: "30%",
-                height: "94%",
-                borderRadius: "50%",
-                display: "flex",
-                alignItems: "center",
-                justifyContent: "center",
-              }}
-            >
-              <img
-                src={userDefaultImage}
-                alt="noImg"
-                width={"80%"}
-                height={"100%"}
-                style={{ borderRadius: "50%"}}
-              />
-            </Box>
-            <Box
-              sx={{
-                width: "65%",
-                height: "90%",
-                display: "flex",
-                alignItems: "center",
-                justifyContent: "start",
-              }}
-            >
-              <Typography
-                variant="h5"
-                sx={{
-                  fontWeight: "bold",
-                  marginLeft: "1rem",
-                  color: "#B1BDC7",
-                }}
-              >
-                {user.name}
-                <Typography variant="h6" sx={{ color: "#B1BDC7" }}>
-                  <span style={{ fontWeight: "550" }}></span> {user.email}
-                </Typography>
-              </Typography>
-            </Box>
-          </List>
-          {/* <List
-            sx={{
-              width: "100%",
-              height: "25%",
-              paddingLeft: "1rem",
-              display: "flex",
-              alignItems: "center",
-              justifyContent: "space-between",
-              backgroundColor:"red"
-            }}
-          >
-            <Box
-              sx={{
-                width: "100%",
-                height: "100%",
-                display: "flex",
-                alignItems: "start",
-                justifyContent: "space-between",
-                flexDirection: "column",
-              }}
-            >
-           
-            
-            </Box>
-          </List> */}
-        </Box>
+    sx={{
+      width: "100%",
+      height: "40%",
+      display: "flex",
+      alignItems: "start",
+      justifyContent: "start",
+      flexDirection: "column",
+    }}
+  >
+      <List
+    sx={{
+      width: "100%",
+      height: "8.5rem",
+      paddingLeft: "1rem",
+      display: "flex",
+      alignItems: "center",
+      justifyContent: "space-between",
+    }}
+  >
+    <Box
+      sx={{
+        width: "30%",
+        height: "94%",
+        borderRadius: "50%",
+        display: "flex",
+        alignItems: "center",
+        justifyContent: "center",
+      }}
+    >
+      <img
+        src={userDefaultImage}
+        alt="noImg"
+        width={"80%"}
+        height={"100%"}
+        style={{ borderRadius: "50%" }}
+      />
+    </Box>
+    <Box
+      sx={{
+        width: "65%",
+        height: "90%",
+        display: "flex",
+        alignItems: "center",
+        justifyContent: "start",
+      }}
+    >
+      <Typography
+        variant="h5"
+        sx={{
+          fontWeight: "bold",
+          marginLeft: "1rem",
+          color: "#B1BDC7",
+        }}
+      >
+        {user.name}
+        <Typography variant="h6" sx={{ color: "#B1BDC7" }}>
+          <span style={{ fontWeight: "550" }}></span> {user.email}
+        </Typography>
+      </Typography>
+    </Box>
+  </List>
+    {/* <UserProfile />++++++++++++++++++++++++ */}
+    <Profile user={user}/>
+  </Box>
+
+
+
         <Box
           sx={{
             width: "100%",
@@ -315,8 +301,11 @@ const UserDashboard = () => {
                 backgroundColor: "#031D36",
                 color: "black",
                 backgroundColor: "#D4AF37",
-                // backgroundColor:"#c62828",
                 fontWeight: "bold",
+                "&:hover": {
+                  backgroundColor: "#b0bec5",
+                  color: "#0c0a0a",
+                },
               }}
             >
               LogOut
@@ -392,15 +381,13 @@ const UserDashboard = () => {
         sx={{ width: { sm: drawerWidth }, flexShrink: { sm: 0 } }}
         aria-label="mailbox folders"
       >
-        {/* The implementation can be swapped with js to avoid SEO duplication of links. */}
         <Drawer
-          //   container={container}
           variant="temporary"
           open={mobileOpen}
           onTransitionEnd={handleDrawerTransitionEnd}
           onClose={handleDrawerClose}
           ModalProps={{
-            keepMounted: true, // Better open performance on mobile.
+            keepMounted: true,
           }}
           sx={{
             display: { xs: "block", sm: "none" },
@@ -430,9 +417,9 @@ const UserDashboard = () => {
         component="main"
         sx={{
           flexGrow: 1,
-          // p: 3,
+
           width: "100%",
-          // width: { sm: `calc(100% - ${drawerWidth}px)` },
+
           height: "90vh",
           display: "flex",
           alignItems: "center",
@@ -461,15 +448,8 @@ const UserDashboard = () => {
             justifyContent: "center",
           }}
         >
-          {/* <Box sx={{ width: "100%", height: "25%" }}>
-            <Box sx={{ width: "100%", height: "60%", backgroundColor:"teal" }}></Box>
-            <Box sx={{ width: "100%", height: "40%" , backgroundColor:"yellow"}}>
-              <Box sx={{ width: "40%", height: "100%"}}>
-              </Box>
-            </Box>
-          </Box> */}
           <Box sx={{ width: "100%", height: "100%" }}>
-            <AllUser />
+            <AllUser token={token} />
           </Box>
         </Box>
       </Box>

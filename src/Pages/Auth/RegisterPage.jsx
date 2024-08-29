@@ -11,7 +11,7 @@ const RegisterPage = () => {
   );
 
   useEffect(() => {
-    if (user && isSuccess) {
+    if (user || isSuccess) {
       navigate("/userdashboard");
     }
     if (isError && message) {

@@ -5,18 +5,21 @@ import LoginForm from "../../Components/Auth/LoginForm";
 import { useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import Loading from "../../Components/Loading/Loading";
+import { toast } from "react-toastify";
+import { errorMessage } from "../../Components/Cases/Cases";
 const LoginPage = () => {
   const navigate = useNavigate();
   const { user, isSuccess, isError, message, isLoading } = useSelector(
     (state) => state.auth
   );
+  console.log(user, "from login")
 
   useEffect(() => {
-    if (user && isSuccess) {
-      navigate("/");
+    if (user || isSuccess) {
+      navigate("/userdashboard");
     }
     if (isError && message) {
-      alert("Something Went Wrong!!");
+      errorMessage();
     }
   }, [user, isSuccess, isError, message]);
 

@@ -1,8 +1,8 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
-import { login } from "./authService";
+import authServices from "./authService";
 
 const userExist = JSON.parse(localStorage.getItem("user"));
-
+console.log(userExist, "slice data")
 
 const initialState = {
   user: userExist ? userExist : null,
@@ -42,12 +42,31 @@ export const loginUser = createAsyncThunk(
   "LOGIN/USER",
   async (formdata, thunkAPI) => {
     try {
-      return await login(formdata);
+      return await authServices.login(formdata);
     } catch (error) {
       const message = error.response.data.message;
       return thunkAPI.rejectWithValue(message);
     }
   }
 );
+
+export const registerUser = createAsyncThunk("REGISTER/USER", async(formdata, thunkAPI)=>{
+  try {
+    return await authServices.register(formdata);
+  } catch (error) {
+   const message = error.response.data.message;
+   return thunkAPI.rejectWithValue(message);
+  }
+})
+
+export const getAllUser = createAsyncThunk("GET/ALLUSERS", async(token) => {
+  try {
+    return await authServices.allUsers(token);
+  } catch (error) {
+  //    const message = error.response.data.message;
+  //  return thunkAPI.rejectWithValue(message);
+  console.log(error.message);
+  }
+})
 
 export default authSlice.reducer;

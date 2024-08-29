@@ -79,11 +79,19 @@ const Navbar = () => {
             }}
           >
             {user ? (
-              <Link to={"/userdashboard"} style={{ color: "white" }}>
+             
+               <>
+                <Link to={"/userdashboard"} style={{ color: "white" }}>
                 <Button color="inherit" sx={{ fontSize: "1.2rem" }}>
-                  User Dashboard
+                 Dashboard
                 </Button>
                </Link>
+               {/* <Link to={"/userdashboard"} style={{ color: "white" }}>
+                <Button color="inherit" sx={{ fontSize: "1.2rem" }}>
+                 Products
+                </Button>
+               </Link> */}
+               </>
             ) : (
               <>
                 <Link to={"/register"} style={{ color: "white" }}>
