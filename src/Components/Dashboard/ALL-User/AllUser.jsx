@@ -13,17 +13,58 @@ import {
 import React, { useEffect, useState } from "react";
 import HomeIcon from "@mui/icons-material/Home";
 import styled from "styled-components";
+import { useDispatch, useSelector } from "react-redux";
+import {
+  deleteUser,
+  editUserReducer,
+  getAllUser,
+} from "../../../Redux/auth/authSlice";
+// import UserDetails from "../../Dialog/UserDetails";
+import DeleteIcon from "@mui/icons-material/Delete";
+import EditIcon from "@mui/icons-material/Edit";
+import UpdateUser from "./UpdateUser";
+import { toast } from "react-toastify";
 
+// const allUserData = Array.from({ length: 100 }, (_, index) => ({
+//   id: index + 1,
+//   name: `User ${index + 1}`,
+//   email: `user${index + 1}@example.com`,
+//   createAt: `2024-01-${(index % 30) + 1}`,
+//   updateAt: `2024-01-${(index % 30) + 1}`,
+// }));
 
-const allUserData = Array.from({ length: 100 }, (_, index) => ({
-  id: index + 1,
-  name: `User ${index + 1}`,
-  email: `user${index + 1}@example.com`,
-  createdAt: `2024-01-${(index % 30) + 1}`,
-  updatedAt: `2024-01-${(index % 30) + 1}`,
-}));
+const AllUser = () => {
+  const { user, allUsers, message } = useSelector((state) => state.auth);
 
-const AllUser = ({token}) => {
+  // Open User Details
+  const [open, setOpen] = React.useState(false);
+  const handleClose = () => {
+    setOpen(false);
+  };
+
+  // api data fecth
+  const dispatch = useDispatch();
+
+  // Get All Users
+  useEffect(() => {
+    dispatch(getAllUser(user.token));
+  }, []);
+
+  // Delete User
+  const handleUserDelete = (id) => {
+    dispatch(deleteUser(id, user.token));
+    toast.success("User Successfully Deleted!!");
+  };
+
+  // Edit User
+  const handleUserEdit = (user) => {
+    alert("Edit Monde")
+    setOpen(true);
+    dispatch(editUserReducer(user));
+  };
+
+ 
+
   // Pagination
   const [page, setPage] = useState(0);
   const [rowsPerPage, setRowsPerPage] = useState(7);
@@ -61,14 +102,10 @@ const AllUser = ({token}) => {
     },
   }));
 
-  const currentPageData = allUserData.slice(
+  const currentPageData = allUsers.slice(
     page * rowsPerPage,
     page * rowsPerPage + rowsPerPage
   );
-
-
-
-
 
   return (
     <>
@@ -206,7 +243,7 @@ const AllUser = ({token}) => {
                       textAlign: "center",
                     }}
                   >
-                    {user.createdAt}
+                    {user.createAt}
                   </TableCell>
                   <TableCell
                     sx={{
@@ -215,10 +252,10 @@ const AllUser = ({token}) => {
                       textAlign: "center",
                     }}
                   >
-                    {user.updatedAt}
+                    {user.updateAt}
                   </TableCell>
                   <TableCell sx={{ fontSize: "1.4rem", textAlign: "center" }}>
-                    <Button
+                    {/* <Button
                       variant="contained"
                       sx={{
                         fontSize: "1.2rem",
@@ -231,9 +268,38 @@ const AllUser = ({token}) => {
                           color: "#0c0a0a",
                         },
                       }}
+                      onClick={handleClickOpen}
                     >
                       View All Details
                     </Button>
+                    <UserDetails open={open} handleClose={handleClose}/> */}
+                    <Box
+                      sx={{
+                        width: "60%",
+                        height: "100%",
+                        display: "flex",
+                        alignItems: "center",
+                        justifyContent: "space-around",
+                      }}
+                    >
+                      <Button
+                        variant="contained"
+                        color="warning"
+                        sx={{ fontSize: "1.2rem" }}
+                        onClick={() => handleUserEdit(user)}
+                      >
+                        <EditIcon />
+                      </Button>
+                      <UpdateUser open={open} handleClose={handleClose} />
+                      <Button
+                        variant="contained"
+                        color="error"
+                        sx={{ fontSize: "1.2rem" }}
+                        onClick={() => handleUserDelete(user.id)}
+                      >
+                        <DeleteIcon />
+                      </Button>
+                    </Box>
                   </TableCell>
                 </TableRow>
               ))}
@@ -244,7 +310,7 @@ const AllUser = ({token}) => {
       <Box sx={{ width: "100%", height: "10%" }}>
         <StyledTablePagination
           component="div"
-          count={allUserData.length}
+          count={allUsers.length}
           page={page}
           onPageChange={handleChangePage}
           rowsPerPage={rowsPerPage}

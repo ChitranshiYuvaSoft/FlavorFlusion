@@ -5,10 +5,9 @@ import Navbar from "./Components/Navbar/Navbar";
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 import LoginPage from "./Pages/Auth/LoginPage";
 import RegisterPage from "./Pages/Auth/RegisterPage";
-import UserDashboard from "./Pages/Dashboard/UserDashboard";
 import ResetPasswordPage from "./Pages/Auth/ResetPasswordPage";
-import UserDetails from "./Pages/Dashboard/userDetails";
 import HomePage from "./Pages/Home/HomePage";
+import  Dashboard  from "./Pages/Dashboard/Dashboard";
 
 const App = () => {
   return (
@@ -19,8 +18,7 @@ const App = () => {
         <Route path="/login" element={<LoginPage />} />
         <Route path="/register" element={<RegisterPage />} />
         <Route path="/reset-password" element={<ResetPasswordPage />} />
-        <Route path="/userdashboard" element={<UserDashboard />} />
-        <Route path="/userdetails/:id" element={<UserDetails />} />
+        <Route path="/dashboard" element={<Dashboard />} />
       </Routes>
       <ToastContainer />
     </BrowserRouter>

@@ -8,29 +8,9 @@ import Loading from "../../Components/Loading/Loading";
 import { toast } from "react-toastify";
 import { errorMessage } from "../../Components/Cases/Cases";
 const LoginPage = () => {
-  const navigate = useNavigate();
-  const { user, isSuccess, isError, message, isLoading } = useSelector(
-    (state) => state.auth
-  );
-  console.log(user, "from login")
-
-  useEffect(() => {
-    if (user || isSuccess) {
-      navigate("/userdashboard");
-    }
-    if (isError && message) {
-      errorMessage();
-    }
-  }, [user, isSuccess, isError, message]);
 
 
-  if(isLoading){
-    return (
-      <>
-      <Loading/>
-      </>
-    )
-  }
+ 
 
 
   return (

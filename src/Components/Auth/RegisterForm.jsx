@@ -14,11 +14,26 @@ import {
   InputLabel,
   TextField,
 } from "@mui/material";
-import AccountCircleIcon from '@mui/icons-material/AccountCircle';
+import AccountCircleIcon from "@mui/icons-material/AccountCircle";
 import Visibility from "@mui/icons-material/Visibility";
 import VisibilityOff from "@mui/icons-material/VisibilityOff";
 import { styled } from "@mui/material/styles";
 import { Link } from "react-router-dom";
+import { useFormik } from "formik";
+import * as yup from "yup";
+
+// Use Yup Validation On Register Form
+const validationSchema = yup.object({
+  name: yup.string("Enter Your Name").required("Name is required"),
+  email: yup
+    .string("Enter Your Email")
+    .email("Enter a valid email")
+    .required("Email is required"),
+  password: yup
+    .string("Enter your password")
+    .min(6, "password should be of minimum 8 characters length")
+    .required("Password is required"),
+});
 
 const RegisterForm = () => {
   const [showPassword, setShowPassword] = React.useState(false);
@@ -30,20 +45,35 @@ const RegisterForm = () => {
   };
 
   const CustomLabel = styled("label")(({ theme }) => ({
-    fontSize: "1.5rem", // Adjust the font size here
+    fontSize: "1.5rem",
     color: "white",
     letterSpacing: ".2rem",
   }));
+
+  // Formik Form In Material UI
+  const formik = useFormik({
+    initialValues: {
+      name: "",
+      email: "",
+      password: "",
+    },
+    validationSchema: validationSchema,
+    onSubmit: (values) => {
+      alert(JSON.stringify(values, null, 2));
+    },
+  });
 
   return (
     <Card
       className="register-card"
       sx={{ paddingBlock: "1.5rem", paddingInline: "1rem" }}
     >
-      <CardContent
+     
+        <form style={{ width: "100%",height:"90%"}} action="" onSubmit={formik.handleSubmit}>
+        <CardContent
         sx={{
           width: "100%",
-          height: "60%",
+          height: "70%",
           display: "flex",
           alignItems: "start",
           justifyContent: "space-around",
@@ -58,86 +88,115 @@ const RegisterForm = () => {
         >
           Sing Up
         </Typography>
-        <Box
-          sx={{
-            width: "100%",
-            display: "flex",
-            alignItems: "flex-end",
-            marginTop: "2rem",
-          }}
-        >
-          <AccountCircleIcon
-            sx={{ color: "white", mr: 1, my: 0.5, fontSize: "3rem" }}
-          />
-          <TextField
-            label={<CustomLabel>Name</CustomLabel>}
-            variant="standard"
-            fullWidth
-            sx={{ color: "white" }}
-          />
-        </Box>
-        <Box
-          sx={{
-            width: "100%",
-            display: "flex",
-            alignItems: "flex-end",
-            marginTop: "2rem",
-          }}
-        >
-          <AttachEmailIcon
-            sx={{ color: "white", mr: 1, my: 0.5, fontSize: "3rem" }}
-          />
-          <TextField
-            label={<CustomLabel>Email</CustomLabel>}
-            variant="standard"
-            fullWidth
-            sx={{ color: "white" }}
-          />
-        </Box>
-
-        <Box
-          sx={{
-            width: "100%",
-            display: "flex",
-            alignItems: "flex-center",
-            justifyContent: "center",
-            marginTop: "2rem",
-          }}
-        >
-          {showPassword ? (
-            <VisibilityOff
-              onClick={handleClickShowPassword}
-              onMouseDown={handleMouseDownPassword}
-              sx={{ color: "white", mr: 1, my: 0.5, fontSize: "3rem" }}
-            />
-          ) : (
-            <Visibility
-              onClick={handleClickShowPassword}
-              onMouseDown={handleMouseDownPassword}
-              sx={{ color: "white", mr: 1, my: 0.5, fontSize: "3rem" }}
-            />
-          )}
-
-          <TextField
-            label={<CustomLabel>Password</CustomLabel>}
-            variant="standard"
-            fullWidth
+          <Box
             sx={{
-              color: "white",
-              fontSize: "60rem",
-              "& .MuiOutlinedInput-root": {
-                "&:hover .MuiOutlinedInput-notchedOutline": {
-                  borderColor: "green", // Change border color on hover
-                },
-              },
-              "& .MuiInputBase-input": {
-                color: "white",
-                fontSize: "1.5rem", // Adjust font size here
-              },
+              width: "100%",
+              display: "flex",
+              alignItems: "flex-end",
+      
+            
             }}
-          />
-        </Box>
-      </CardContent>
+          >
+            <AccountCircleIcon
+              sx={{ color: "white", mr: "1.5rem", my: 0.5, fontSize: "3rem" }}
+            />
+            <TextField
+              label={<CustomLabel>Name</CustomLabel>}
+              variant="standard"
+              fullWidth
+              sx={{
+                "& .MuiInputBase-input": {
+                  color: "white",
+                  fontSize: "1.5rem", // Adjust font size here
+                },
+              }}
+              name="name"
+              value={formik.values.name}
+              onChange={formik.handleChange}
+              onBlur={formik.handleBlur}
+              error={formik.touched.name && Boolean(formik.errors.name)}
+              helperText={formik.touched.name && formik.errors.name}
+            />
+          </Box>
+          <Box
+            sx={{
+              width: "100%",
+              display: "flex",
+              alignItems: "flex-end",
+              // marginTop: "2rem",
+            }}
+          >
+            <AttachEmailIcon
+              sx={{ color: "white", mr: "1.5rem", my: 0.5, fontSize: "3rem" }}
+            />
+            <TextField
+              label={<CustomLabel>Email</CustomLabel>}
+              variant="standard"
+              fullWidth
+              sx={{
+                "& .MuiInputBase-input": {
+                  color: "white",
+                  fontSize: "1.5rem",
+                },
+              }}
+              name="email"
+              value={formik.values.email}
+              onChange={formik.handleChange}
+              onBlur={formik.handleBlur}
+              error={formik.touched.email && Boolean(formik.errors.email)}
+              helperText={formik.touched.email && formik.errors.email}
+            />
+          </Box>
+
+          <Box
+            sx={{
+              width: "100%",
+              display: "flex",
+              alignItems: "flex-center",
+              justifyContent: "center",
+              // marginTop: "2rem",
+            }}
+          >
+            {showPassword ? (
+              <VisibilityOff
+                onClick={handleClickShowPassword}
+                onMouseDown={handleMouseDownPassword}
+                sx={{ color: "white",mr: "1.5rem", my: 0.5, fontSize: "3rem" }}
+              />
+            ) : (
+              <Visibility
+                onClick={handleClickShowPassword}
+                onMouseDown={handleMouseDownPassword}
+                sx={{ color: "white",mr: "1.5rem", my: 0.5, fontSize: "3rem" }}
+              />
+            )}
+
+            <TextField
+              label={<CustomLabel>Password</CustomLabel>}
+              variant="standard"
+              fullWidth
+              sx={{
+                color: "white",
+                fontSize: "60rem",
+                "& .MuiOutlinedInput-root": {
+                  "&:hover .MuiOutlinedInput-notchedOutline": {
+                    borderColor: "green",
+                  },
+                },
+                "& .MuiInputBase-input": {
+                  color: "white",
+                  fontSize: "1.4rem",
+                },
+              }}
+              name="password"
+              value={formik.values.password}
+              onChange={formik.handleChange}
+              onBlur={formik.handleBlur}
+              error={formik.touched.password && Boolean(formik.errors.password)}
+              helperText={formik.touched.password && formik.errors.password}
+            />
+          </Box>
+          </CardContent>
       <CardActions
         sx={{
           width: "100%",
@@ -186,9 +245,14 @@ const RegisterForm = () => {
           Sign Up With Google
         </Button>
       </CardActions>
-      <Box sx={{width:"100%", height:"10%"}}>
+        </form>
+   
+      <Box sx={{ width: "100%", height: "10%" }}>
         <Typography align="center" variant="h6">
-          You have already account <Link to={"/"} className="link">Sign In</Link>
+          You have already account{" "}
+          <Link to={"/"} className="link">
+            Sign In
+          </Link>
         </Typography>
       </Box>
     </Card>
