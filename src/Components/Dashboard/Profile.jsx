@@ -68,7 +68,6 @@ const Profile = ({user}) => {
     </Box>
   </List>
     {/* <UserProfile />++++++++++++++++++++++++ */}
-    <Profile user={user}/>
   </Box>
   
   )

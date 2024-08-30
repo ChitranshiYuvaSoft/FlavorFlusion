@@ -17,7 +17,8 @@ import KeyboardArrowRightIcon from "@mui/icons-material/KeyboardArrowRight";
 import { useDispatch, useSelector } from "react-redux";
 import AllUser from "../../Components/Dashboard/ALL-User/AllUser";
 import PersonIcon from "@mui/icons-material/Person";
-import Profile from "../../Components/Dashboard/Profile";
+// import Profile from "../../Components/Dashboard/Profile";
+import userDefaultImage from "../../assets/Img/userDefaultImage.png";
 
 const drawerWidth = 300;
 
@@ -95,6 +96,8 @@ const UserDashboard = () => {
       flexDirection: "column",
     }}
   >
+              {/* <UserProfile />++++++++++++++++++++++++ */}
+
       <List
     sx={{
       width: "100%",
@@ -148,7 +151,7 @@ const UserDashboard = () => {
     </Box>
   </List>
     {/* <UserProfile />++++++++++++++++++++++++ */}
-    <Profile user={user}/>
+    {/* <Profile user={user}/> */}
   </Box>
 
 
