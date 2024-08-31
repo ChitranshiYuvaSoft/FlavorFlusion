@@ -8,6 +8,7 @@ import RegisterPage from "./Pages/Auth/RegisterPage";
 import ResetPasswordPage from "./Pages/Auth/ResetPasswordPage";
 import HomePage from "./Pages/Home/HomePage";
 import  Dashboard  from "./Pages/Dashboard/Dashboard";
+import EmailVerification from "./Pages/Auth/EmailVerification";
 
 const App = () => {
   return (
@@ -18,6 +19,7 @@ const App = () => {
         <Route path="/login" element={<LoginPage />} />
         <Route path="/register" element={<RegisterPage />} />
         <Route path="/reset-password" element={<ResetPasswordPage />} />
+        <Route path="/email-verification" element={<EmailVerification/>} />
         <Route path="/dashboard" element={<Dashboard />} />
       </Routes>
       <ToastContainer />

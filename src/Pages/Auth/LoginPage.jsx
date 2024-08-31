@@ -8,10 +8,20 @@ import Loading from "../../Components/Loading/Loading";
 import { toast } from "react-toastify";
 import { errorMessage } from "../../Components/Cases/Cases";
 const LoginPage = () => {
+  const navigate = useNavigate();
+  const { user, isSuccess, verificationMessage } = useSelector((state) => state.auth);
 
+  // console.log(user, isSuccess, "login page")
+  console.log(verificationMessage.message, "verificationMessage")
 
- 
-
+  useEffect(() => {
+    if (user) {
+      navigate("/dashboard");
+    }
+    else if(!user){
+      navigate('/login')
+    }
+  }, [user, isSuccess]);
 
   return (
     <>

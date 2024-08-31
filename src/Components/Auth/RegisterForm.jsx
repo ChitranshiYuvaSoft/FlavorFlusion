@@ -6,21 +6,16 @@ import CardContent from "@mui/material/CardContent";
 import Button from "@mui/material/Button";
 import AttachEmailIcon from "@mui/icons-material/AttachEmail";
 import Typography from "@mui/material/Typography";
-import {
-  FormControl,
-  IconButton,
-  Input,
-  InputAdornment,
-  InputLabel,
-  TextField,
-} from "@mui/material";
+import { TextField } from "@mui/material";
 import AccountCircleIcon from "@mui/icons-material/AccountCircle";
 import Visibility from "@mui/icons-material/Visibility";
 import VisibilityOff from "@mui/icons-material/VisibilityOff";
 import { styled } from "@mui/material/styles";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { useFormik } from "formik";
 import * as yup from "yup";
+import { useDispatch } from "react-redux";
+import { registerUser } from "../../Redux/auth/authSlice";
 
 // Use Yup Validation On Register Form
 const validationSchema = yup.object({
@@ -36,6 +31,8 @@ const validationSchema = yup.object({
 });
 
 const RegisterForm = () => {
+  const navigate = useNavigate();
+  const dispatch = useDispatch();
   const [showPassword, setShowPassword] = React.useState(false);
 
   const handleClickShowPassword = () => setShowPassword((show) => !show);
@@ -59,7 +56,8 @@ const RegisterForm = () => {
     },
     validationSchema: validationSchema,
     onSubmit: (values) => {
-      alert(JSON.stringify(values, null, 2));
+      dispatch(registerUser(values));
+      navigate("/email-verification");
     },
   });
 
@@ -68,33 +66,34 @@ const RegisterForm = () => {
       className="register-card"
       sx={{ paddingBlock: "1.5rem", paddingInline: "1rem" }}
     >
-     
-        <form style={{ width: "100%",height:"90%"}} action="" onSubmit={formik.handleSubmit}>
-        <CardContent
-        sx={{
-          width: "100%",
-          height: "70%",
-          display: "flex",
-          alignItems: "start",
-          justifyContent: "space-around",
-          flexDirection: "column",
-        }}
+      <form
+        style={{ width: "100%", height: "90%" }}
+        action=""
+        onSubmit={formik.handleSubmit}
       >
-        <Typography
-          sx={{ letterSpacing: 3 }}
-          color="white"
-          gutterBottom
-          variant="h4"
+        <CardContent
+          sx={{
+            width: "100%",
+            height: "70%",
+            display: "flex",
+            alignItems: "start",
+            justifyContent: "space-around",
+            flexDirection: "column",
+          }}
         >
-          Sing Up
-        </Typography>
+          <Typography
+            sx={{ letterSpacing: 3 }}
+            color="white"
+            gutterBottom
+            variant="h4"
+          >
+            Sing Up
+          </Typography>
           <Box
             sx={{
               width: "100%",
               display: "flex",
               alignItems: "flex-end",
-      
-            
             }}
           >
             <AccountCircleIcon
@@ -161,13 +160,13 @@ const RegisterForm = () => {
               <VisibilityOff
                 onClick={handleClickShowPassword}
                 onMouseDown={handleMouseDownPassword}
-                sx={{ color: "white",mr: "1.5rem", my: 0.5, fontSize: "3rem" }}
+                sx={{ color: "white", mr: "1.5rem", my: 0.5, fontSize: "3rem" }}
               />
             ) : (
               <Visibility
                 onClick={handleClickShowPassword}
                 onMouseDown={handleMouseDownPassword}
-                sx={{ color: "white",mr: "1.5rem", my: 0.5, fontSize: "3rem" }}
+                sx={{ color: "white", mr: "1.5rem", my: 0.5, fontSize: "3rem" }}
               />
             )}
 
@@ -196,57 +195,58 @@ const RegisterForm = () => {
               helperText={formik.touched.password && formik.errors.password}
             />
           </Box>
-          </CardContent>
-      <CardActions
-        sx={{
-          width: "100%",
-          height: "30%",
-          display: "flex",
-          alignItems: "center",
-          justifyContent: "space-around",
-          flexDirection: "column",
-        }}
-      >
-        <Button
-          size="small"
-          variant="contained"
-          fullWidth
+        </CardContent>
+        <CardActions
           sx={{
-            paddingBlock: "1rem",
-            fontSize: "1.4rem",
-            backgroundColor: "#D4AF37",
-            color: "black",
-            fontWeight: "bold",
-            "&:hover": {
-              backgroundColor: "#0c0a0a",
-              color: "white",
-            },
+            width: "100%",
+            height: "30%",
+            display: "flex",
+            alignItems: "center",
+            justifyContent: "space-around",
+            flexDirection: "column",
           }}
         >
-          Sign Up
-        </Button>
-        <Button
-          size="small"
-          variant="contained"
-          fullWidth
-          sx={{
-            marginLeft: "0rem !important",
-            paddingBlock: "1rem",
-            fontSize: "1.4rem",
-            backgroundColor: "#fff",
-            color: "black",
-            fontWeight: "bold",
-            "&:hover": {
-              backgroundColor: "#0c0a0a",
-              color: "white",
-            },
-          }}
-        >
-          Sign Up With Google
-        </Button>
-      </CardActions>
-        </form>
-   
+          <Button
+            size="small"
+            variant="contained"
+            fullWidth
+            sx={{
+              paddingBlock: "1rem",
+              fontSize: "1.4rem",
+              backgroundColor: "#D4AF37",
+              color: "black",
+              fontWeight: "bold",
+              "&:hover": {
+                backgroundColor: "#0c0a0a",
+                color: "white",
+              },
+            }}
+            type="submit"
+          >
+            Sign Up
+          </Button>
+          <Button
+            size="small"
+            variant="contained"
+            fullWidth
+            sx={{
+              marginLeft: "0rem !important",
+              paddingBlock: "1rem",
+              fontSize: "1.4rem",
+              backgroundColor: "#fff",
+              color: "black",
+              fontWeight: "bold",
+              "&:hover": {
+                backgroundColor: "#0c0a0a",
+                color: "white",
+              },
+            }}
+          >
+            Sign Up With Google
+          </Button>
+        </CardActions>
+      </form>
+
       <Box sx={{ width: "100%", height: "10%" }}>
         <Typography align="center" variant="h6">
           You have already account{" "}

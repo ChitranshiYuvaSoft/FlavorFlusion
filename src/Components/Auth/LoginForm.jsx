@@ -38,7 +38,7 @@ const LoginForm = () => {
   };
 
   const dispatch = useDispatch();
-
+  const navigate = useNavigate();
   const CustomLabel = styled("label")(({ theme }) => ({
     fontSize: "1.5rem",
     color: "white",
@@ -48,15 +48,16 @@ const LoginForm = () => {
   // Formik Form In Material UI
   const formik = useFormik({
     initialValues: {
-      name: "",
       email: "",
       password: "",
     },
     validationSchema: validationSchema,
     onSubmit: (values) => {
       console.log(values);
-      console.log("Submit Data")
-      alert(JSON.stringify(values, null, 2));
+      dispatch(loginUser(values));
+      navigate('/dashboard')
+      console.log("Submit Data");
+      // alert(JSON.stringify(values, null, 2));
       dispatch(loginUser(values));
     },
   });
@@ -193,6 +194,7 @@ const LoginForm = () => {
                 color: "white",
               },
             }}
+            type="submit"
           >
             Sign In
           </Button>

@@ -15,21 +15,17 @@ import UsersDashboard from "./Users/UsersDashboard";
 import CategoriesDashboard from "./Categories/CategoriesDashboard";
 import { useNavigate } from "react-router-dom";
 
-const drawerWidth = 300;
+const drawerWidth = 345;
 
 const Dashboard = () => {
   const [selectedSection, setSelectedSection] = useState(null); // State to track selected section
-  const { user, isSuccess } = useSelector((state) => state.auth);
+  const { user, isSuccess , registerUser} = useSelector((state) => state.auth);
+console.log(user, isSuccess, "dahboard page")
+  // const token = user.token;
+  // console.log(token, "dashboard")
 
-  const token = user.token;
-  console.log(token, "dashboard")
-  const navigate = useNavigate();
 
-  // useEffect(()=>{
-  //   if(!user || !isSuccess){
-  //     navigate('/login');
-  //   }
-  // },[user, isSuccess]);
+  console.log(registerUser, "dahboard register")
 
   const handleSectionChange = (section) => {
     setSelectedSection(section);

@@ -1,14 +1,16 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import authServices from "./authService";
 
-const userExist = JSON.parse(localStorage.getItem("user"));
-console.log(userExist, "slice data")
+// const userExist = JSON.parse(localStorage.getItem("user"));
+// console.log(userExist, "slice data")
+// const registerUserExist
 
 const initialState = {
-  user: userExist ? userExist : null,
+  user: null,
+  registerUser : null,
   allUsers : [],
   editUser : {user : {}, isEdit : false},
-  isLoading: false,
+  verificationMessage : "",
   isError: false,
   isSuccess: false,
   message : ""
@@ -46,6 +48,44 @@ const authSlice = createSlice({
         state.isSuccess = false
         state.message = action.payload
     })
+
+
+    // Register User
+    .addCase(registerUser.pending, (state, action) => {
+      state.isLoading = true;
+      state.isError = false;
+      state.isSuccess = false;
+  })
+  .addCase(registerUser.fulfilled, (state, action) => {
+      state.isLoading = false;
+      state.isError = false;
+      state.isSuccess = true;
+      state.registerUser = action.payload;
+  })
+  .addCase(registerUser.rejected, (state, action) => {
+      state.isLoading = false;
+      state.isError = true;
+      state.isSuccess = false
+      state.message = action.payload
+  })
+
+  // Email Verification
+  .addCase(emailVerification.pending, (state, action) => {
+    state.isLoading = true;
+    state.isSuccess = false;
+    state.isError = false;
+  })
+  .addCase(emailVerification.fulfilled, (state, action) => {
+    state.isLoading = false;
+    state.isSuccess = true;
+    state.verificationMessage = action.payload;
+    state.isError = false;
+  })
+  .addCase(emailVerification.rejected, (state, action) => {
+    state.isLoading = false;
+    state.isSuccess = false;
+    state.isError = action.payload;
+  })
 
 
     // All Users Data
@@ -106,14 +146,27 @@ export const loginUser = createAsyncThunk(
 
 // Register User
 export const registerUser = createAsyncThunk("REGISTER/USER", async(formdata, thunkAPI)=>{
+  // console.log(formdata, "Slice")
   try {
     return await authServices.register(formdata);
   } catch (error) {
-  //  const message = error.response.data.message;
-  //  return thunkAPI.rejectWithValue(message);
-  console.log(error.message);
+   const message = error.response.data.message;
+   return thunkAPI.rejectWithValue(message);
+  // console.log(error.message);
   }
 })
+
+// Email Verification
+export const emailVerification = createAsyncThunk("EMAIL/VERIFICATION", async(data, thunkAPI) => {
+  console.log(data, "Slice Verification");
+  try {
+    return await authServices.verification(data);
+  } catch (error) {
+      console.log(error.message);
+    const message = error.response.data.message;
+    return thunkAPI.rejectWithValue(message);
+  }
+} )
 
 
 // All Users

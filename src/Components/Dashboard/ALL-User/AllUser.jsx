@@ -74,7 +74,7 @@ const AllUser = () => {
   };
 
   const handleChangeRowsPerPage = (event) => {
-    setRowsPerPage(parseInt(event.target.value, 10));
+    setRowsPerPage(parseInt(event.target.value, 7));
     setPage(0);
   };
 

@@ -8,19 +8,27 @@ const login = async (formdata) => {
     formdata
   );
   console.log(response.data.data);
-  localStorage.setItem("user", JSON.stringify(response.data.data));
+  // localStorage.setItem("user", JSON.stringify(response.data.data));
   return response.data.data;
 };
 
 // Register User
-const register = async (formdata) => {
+const register = async (userData) => {
   const response = await axios.post(
     "https://node-js-wse4.onrender.com/user",
-    formdata
+    userData
   );
-  console.log(response);
-  return response;
+  // console.log(response, "signup response");
+  return response.data.data;
 };
+
+// Email Verification
+const verification = async(data) => {
+  console.log(data, "service")
+  const response = await axios.get(`https://node-js-wse4.onrender.com/user/email/verification?token=${data.token}&userId=${data.id}` );
+  console.log(response.data , "response verification service");
+  return response.data;
+}
 
 // Get All Users
 const allUsers = async (token) => {
@@ -53,9 +61,10 @@ const removeUser = async (id, token) => {
 const updatedUser = async (userdata, token) => {
   console.log(userdata, "from UserData Service");
   const response = await axios.put(
-    `https://node-js-wse4.onrender.com/user/${userdata.id}`, {
-      name : userdata.name,
-      email : userdata.email
+    `https://node-js-wse4.onrender.com/user/${userdata.id}`,
+    {
+      name: userdata.name,
+      email: userdata.email,
     },
     {
       headers: {
@@ -73,6 +82,7 @@ const authServices = {
   allUsers,
   removeUser,
   updatedUser,
+  verification
 };
 
 export default authServices;
