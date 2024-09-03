@@ -1,7 +1,7 @@
 import { Box } from "@mui/material";
 import React from "react";
 // import './loading.css'
-const Loading = () => {
+ const Loading = () => {
   return (
     /* From Uiverse.io by Nawsome */
     <Box className="loading-page">

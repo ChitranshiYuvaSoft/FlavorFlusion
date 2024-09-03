@@ -9,11 +9,15 @@ const EmailVerification = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
-  const { registerUser } = useSelector((state) => state.auth);
+  const {verificationMessage,isSuccess, isError, message, registerUser } = useSelector((state) => state.auth);
+  console.log(registerUser, "email Data registerUser")
+
   const data = {
     token: registerUser.emailVerificationTOken,
     id: registerUser.id,
   };
+
+  console.log(data, "email Data")
 
   const verifyEmail = (data) => {
     alert("Verify Successfully!!");
@@ -21,6 +25,14 @@ const EmailVerification = () => {
     navigate("/login");
     
   };
+
+  useEffect(()=>{
+    if(verificationMessage && isSuccess){
+      navigate('/login')
+    }else if(isError && message){
+      alert(message)
+    }
+  },[verificationMessage, isSuccess, isError, message])
 
   return (
     <>

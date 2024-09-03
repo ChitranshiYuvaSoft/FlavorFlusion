@@ -1,15 +1,44 @@
 import React, { useEffect } from "react";
 import { Box } from "@mui/material";
-import RegisterForm from "../../Components/Auth/RegisterForm";
 import { useNavigate } from "react-router-dom";
 import { useSelector } from "react-redux";
 import Loading from "../../Components/Loading/Loading";
+import Card from "@mui/material/Card";
+import CardActions from "@mui/material/CardActions";
+import CardContent from "@mui/material/CardContent";
+import Button from "@mui/material/Button";
+import AttachEmailIcon from "@mui/icons-material/AttachEmail";
+import Typography from "@mui/material/Typography";
+import { TextField } from "@mui/material";
+import AccountCircleIcon from "@mui/icons-material/AccountCircle";
+import Visibility from "@mui/icons-material/Visibility";
+import VisibilityOff from "@mui/icons-material/VisibilityOff";
+import { styled } from "@mui/material/styles";
+import { Link } from "react-router-dom";
+import { useFormik } from "formik";
+import * as yup from "yup";
+import { useDispatch } from "react-redux";
+import {  registerUsers } from "../../Redux/auth/authSlice";
+// import { registerUser } from "../../Redux/auth/authSlice";
+
+// Use Yup Validation On Register Form
+const validationSchema = yup.object({
+  name: yup.string("Enter Your Name").required("Name is required"),
+  email: yup
+    .string("Enter Your Email")
+    .email("Enter a valid email")
+    .required("Email is required"),
+  password: yup
+    .string("Enter your password")
+    .min(6, "password should be of minimum 8 characters length")
+    .required("Password is required"),
+});
+
 const RegisterPage = () => {
   const navigate = useNavigate();
-  const {registerUser, user, isSuccess, isError, message, isLoading } = useSelector(
-    (state) => state.auth
-  );
-console.log(registerUser, "dataRegister")
+  const { registerUser,user, isSuccess, isError, message, isLoading } =
+    useSelector((state) => state.auth);
+  // console.log(registerUser, "dataRegister");
   // useEffect(() => {
   //   if (user || isSuccess) {
   //     navigate("/userdashboard");
@@ -19,21 +48,280 @@ console.log(registerUser, "dataRegister")
   //   }
   // }, [user, isSuccess, isError, message]);
 
+  const dispatch = useDispatch();
+  const [showPassword, setShowPassword] = React.useState(false);
 
-  if(isLoading){
-    return (
-      <>
-      <Loading/>
-      </>
-    )
-  }
+  const handleClickShowPassword = () => setShowPassword((show) => !show);
+
+  const handleMouseDownPassword = (event) => {
+    event.preventDefault();
+  };
+
+  const CustomLabel = styled("label")(({ theme }) => ({
+    fontSize: "1.5rem",
+    color: "white",
+    letterSpacing: ".2rem",
+  }));
+
+  // Formik Form In Material UI
+  const formik = useFormik({
+    initialValues: {
+      name: "",
+      email: "",
+      password: "",
+    },
+    validationSchema: validationSchema,
+    onSubmit: (values) => {
+      alert(values);
+      console.log(values)
+      dispatch(registerUsers(values));
+      // navigate("/email-verification");
+    },
+  });
+
+  useEffect(()=>{
+    if(registerUser && isSuccess){
+      navigate('/email-verification');
+    }else if(isError && message){
+      alert(message);
+    }
+  },[registerUser, isSuccess, isError, message])
 
   return (
     <>
       <Box className="register-page">
         <Box className="left-register"></Box>
         <Box className="right-register">
-          <RegisterForm/>
+          {/* <RegisterForm/> */}
+          {isLoading ? (
+            <Loading />
+          ) : (
+            <>
+              <Card
+                className="register-card"
+                sx={{ paddingBlock: "1.5rem", paddingInline: "1rem" }}
+              >
+                <form
+                  style={{ width: "100%", height: "90%" }}
+                  action=""
+                  onSubmit={formik.handleSubmit}
+                >
+                  <CardContent
+                    sx={{
+                      width: "100%",
+                      height: "70%",
+                      display: "flex",
+                      alignItems: "start",
+                      justifyContent: "space-around",
+                      flexDirection: "column",
+                    }}
+                  >
+                    <Typography
+                      sx={{ letterSpacing: 3 }}
+                      color="white"
+                      gutterBottom
+                      variant="h4"
+                    >
+                      Sing Up
+                    </Typography>
+                    <Box
+                      sx={{
+                        width: "100%",
+                        display: "flex",
+                        alignItems: "flex-end",
+                      }}
+                    >
+                      <AccountCircleIcon
+                        sx={{
+                          color: "white",
+                          mr: "1.5rem",
+                          my: 0.5,
+                          fontSize: "3rem",
+                        }}
+                      />
+                      <TextField
+                        label={<CustomLabel>Name</CustomLabel>}
+                        variant="standard"
+                        fullWidth
+                        sx={{
+                          "& .MuiInputBase-input": {
+                            color: "white",
+                            fontSize: "1.5rem", // Adjust font size here
+                          },
+                        }}
+                        name="name"
+                        value={formik.values.name}
+                        onChange={formik.handleChange}
+                        onBlur={formik.handleBlur}
+                        error={
+                          formik.touched.name && Boolean(formik.errors.name)
+                        }
+                        helperText={formik.touched.name && formik.errors.name}
+                      />
+                    </Box>
+                    <Box
+                      sx={{
+                        width: "100%",
+                        display: "flex",
+                        alignItems: "flex-end",
+                        // marginTop: "2rem",
+                      }}
+                    >
+                      <AttachEmailIcon
+                        sx={{
+                          color: "white",
+                          mr: "1.5rem",
+                          my: 0.5,
+                          fontSize: "3rem",
+                        }}
+                      />
+                      <TextField
+                        label={<CustomLabel>Email</CustomLabel>}
+                        variant="standard"
+                        fullWidth
+                        sx={{
+                          "& .MuiInputBase-input": {
+                            color: "white",
+                            fontSize: "1.5rem",
+                          },
+                        }}
+                        name="email"
+                        value={formik.values.email}
+                        onChange={formik.handleChange}
+                        onBlur={formik.handleBlur}
+                        error={
+                          formik.touched.email && Boolean(formik.errors.email)
+                        }
+                        helperText={formik.touched.email && formik.errors.email}
+                      />
+                    </Box>
+
+                    <Box
+                      sx={{
+                        width: "100%",
+                        display: "flex",
+                        alignItems: "flex-center",
+                        justifyContent: "center",
+                        // marginTop: "2rem",
+                      }}
+                    >
+                      {showPassword ? (
+                        <VisibilityOff
+                          onClick={handleClickShowPassword}
+                          onMouseDown={handleMouseDownPassword}
+                          sx={{
+                            color: "white",
+                            mr: "1.5rem",
+                            my: 0.5,
+                            fontSize: "3rem",
+                          }}
+                        />
+                      ) : (
+                        <Visibility
+                          onClick={handleClickShowPassword}
+                          onMouseDown={handleMouseDownPassword}
+                          sx={{
+                            color: "white",
+                            mr: "1.5rem",
+                            my: 0.5,
+                            fontSize: "3rem",
+                          }}
+                        />
+                      )}
+
+                      <TextField
+                        label={<CustomLabel>Password</CustomLabel>}
+                        variant="standard"
+                        fullWidth
+                        sx={{
+                          color: "white",
+                          fontSize: "60rem",
+                          "& .MuiOutlinedInput-root": {
+                            "&:hover .MuiOutlinedInput-notchedOutline": {
+                              borderColor: "green",
+                            },
+                          },
+                          "& .MuiInputBase-input": {
+                            color: "white",
+                            fontSize: "1.4rem",
+                          },
+                        }}
+                        name="password"
+                        value={formik.values.password}
+                        onChange={formik.handleChange}
+                        onBlur={formik.handleBlur}
+                        error={
+                          formik.touched.password &&
+                          Boolean(formik.errors.password)
+                        }
+                        helperText={
+                          formik.touched.password && formik.errors.password
+                        }
+                      />
+                    </Box>
+                  </CardContent>
+                  <CardActions
+                    sx={{
+                      width: "100%",
+                      height: "30%",
+                      display: "flex",
+                      alignItems: "center",
+                      justifyContent: "space-around",
+                      flexDirection: "column",
+                    }}
+                  >
+                    <Button
+                      size="small"
+                      variant="contained"
+                      fullWidth
+                      sx={{
+                        paddingBlock: "1rem",
+                        fontSize: "1.4rem",
+                        backgroundColor: "#D4AF37",
+                        color: "black",
+                        fontWeight: "bold",
+                        "&:hover": {
+                          backgroundColor: "#0c0a0a",
+                          color: "white",
+                        },
+                      }}
+                      type="submit"
+                    >
+                      Sign Up
+                    </Button>
+                    <Button
+                      size="small"
+                      variant="contained"
+                      fullWidth
+                      sx={{
+                        marginLeft: "0rem !important",
+                        paddingBlock: "1rem",
+                        fontSize: "1.4rem",
+                        backgroundColor: "#fff",
+                        color: "black",
+                        fontWeight: "bold",
+                        "&:hover": {
+                          backgroundColor: "#0c0a0a",
+                          color: "white",
+                        },
+                      }}
+                    >
+                      Sign Up With Google
+                    </Button>
+                  </CardActions>
+                </form>
+
+                <Box sx={{ width: "100%", height: "10%" }}>
+                  <Typography align="center" variant="h6">
+                    You have already account{" "}
+                    <Link to={"/"} className="link">
+                      Sign In
+                    </Link>
+                  </Typography>
+                </Box>
+              </Card>
+            </>
+          )}
         </Box>
       </Box>
     </>

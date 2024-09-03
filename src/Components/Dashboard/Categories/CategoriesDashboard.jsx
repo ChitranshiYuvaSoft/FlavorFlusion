@@ -12,10 +12,9 @@ import React, { useState } from "react";
 import MenuIcon from "@mui/icons-material/Menu";
 import PersonIcon from "@mui/icons-material/Person";
 
+import AllCategories from "../Categories/AllCategories/AllCategories";
 
-import AllProducts from "../../../Components/Dashboard/AllProducts/AllProducts";
-
-const ProductsDashboard = () => {
+const CategoriesDashboard = () => {
   const [isClosing, setIsClosing] = useState(false);
   const [mobileOpen, setMobileOpen] = useState(false);
 
@@ -32,15 +31,13 @@ const ProductsDashboard = () => {
     setIsClosing(false);
   };
 
-
-
   return (
     <Box sx={{ display: "flex", backgroundColor: "#0c0a0a" }}>
       <CssBaseline />
       <AppBar
         position="fixed"
         sx={{
-        //   width: { sm: `calc(100% - ${drawerWidth}px)` },
+          //   width: { sm: `calc(100% - ${drawerWidth}px)` },
           ml: {
             // sm: `${drawerWidth}px`,
             width: "100%",
@@ -111,7 +108,7 @@ const ProductsDashboard = () => {
             display: { xs: "block", sm: "none" },
             "& .MuiDrawer-paper": {
               boxSizing: "border-box",
-            //   width: drawerWidth,
+              //   width: drawerWidth,
             },
           }}
         >
@@ -123,7 +120,7 @@ const ProductsDashboard = () => {
             display: { xs: "none", sm: "block" },
             "& .MuiDrawer-paper": {
               boxSizing: "border-box",
-            //   width: drawerWidth,
+              //   width: drawerWidth,
             },
           }}
           open
@@ -167,7 +164,7 @@ const ProductsDashboard = () => {
           }}
         >
           <Box sx={{ width: "100%", height: "100%" }}>
-            <AllProducts />
+            <AllCategories />
           </Box>
         </Box>
       </Box>
@@ -175,4 +172,4 @@ const ProductsDashboard = () => {
   );
 };
 
-export default ProductsDashboard;
+export default CategoriesDashboard;

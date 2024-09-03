@@ -20,14 +20,188 @@ html {
   background-color: rgb(45, 41, 41);
 }
 
+/* Drawer */
+.drawer {
+  background-color: #0c0a0a;
+}
+/* Navbar */
+.navbar {
+  width: 100%;
+  height: 10vh;
+  background-color: #0c0a0a !important;
+  padding-block: 1rem;
+}
+
+/* Auth */
+/* Login Page & Register Page & Reset Password Page*/
+.login-page,
+.register-page,
+.reset-password-page,
+.user-details-page,
+.email-verification-page {
+  width: 100%;
+  height: 90vh;
+  background: url("./assets/Img/loginBg.jpg");
+  background-position: center;
+  background-size: cover;
+  background-repeat: no-repeat;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.left-login,
+.left-register,
+.left-reset-password,
+.left-user-details,
+.left-email-verification {
+  width: 50%;
+  height: 100%;
+}
+.right-login,
+.right-register,
+.right-reset-password,
+.right-user-detail,
+.right-email-verification{
+  width: 50%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.login-card {
+  width: 50%;
+  height: 65%;
+  background-color: rgba(255, 255, 255, 0.253) !important;
+}
+
+/* Register Card */
+.register-card {
+  width: 50%;
+  height: 70%;
+  background-color: rgba(255, 255, 255, 0.253) !important;
+}
+.link {
+  color: #2196f3;
+}
+.link:visited {
+  color: #bbdefb;
+}
+
+/* Reset Password Page */
+.reset-password-card {
+  width: 50%;
+  height: 50%;
+  background-color: rgba(255, 255, 255, 0.253) !important;
+}
+
+/* Verification Form */
+.verification-form{
+  width: 65%;
+  height: 60%;
+  background-color: rgba(255, 255, 255, 0.253) !important;
+}
+
+
+/* HomePage CSS */
+.home-page{
+  width: 100%;
+  height: 90vh;
+  background: url("./assets/Img/loginBg.jpg");
+  background-position: center;
+  background-size: cover;
+  background-repeat: no-repeat;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.home{
+  width: 50%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* Categories Dashboard */
+/* All Categories */
+.category-dropdown{
+  width: 40%;
+  height: 75%;
+  border-radius: 0rem;
+}
+
+/* Responsive For 768 PX */
+@media (max-width: 768px) {
+  html {
+    font-size: 45%;
+  }
+  .login-card {
+    width: 80%;
+  }
+}
+
+/* Responsive For 450 PX */
+@media (max-width: 450px) {
+  .left-login {
+    width: 0%;
+  }
+  .right-login {
+    width: 100%;
+  }
+  .login-card {
+    width: 70%;
+    height: 65%;
+  }
+}
+
+/* User Dashboard Page */
+/* All User & All User Data */
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 /* Loading Component */
 /* From Uiverse.io by Nawsome */
+
+/* Circular Loading */
+/* From Uiverse.io by JesusRafaelNavaCruz */ 
+.loader {
+  width: 4rem;
+  height: 4rem;
+  border-radius: 50%;
+  box-sizing: border-box;
+  border-top: 8px solid #fff;
+  border-left: 8px solid #fff;
+  border-right: 8px solid #ff00;
+  animation: loader .7s infinite linear;
+}
+
+@keyframes loader {
+  to {
+    transform: rotate(360deg);
+  }
+}
 
 /* Loading Component */
 .loading-page {
   width: 100%;
   height: 90vh;
-  background-color: #0c0a0a;
+  background-color:  transparent;
   /* background: url("./assets/Img/loginBg.jpg"); */
   /* background-position: center;
   background-size: cover;
@@ -535,133 +709,3 @@ html {
 .banter-loader__box:nth-child(9) {
   animation: moveBox-9 4s infinite;
 }
-
-/* Drawer */
-.drawer {
-  background-color: #0c0a0a;
-}
-/* Navbar */
-.navbar {
-  width: 100%;
-  height: 10vh;
-  background-color: #0c0a0a !important;
-  padding-block: 1rem;
-}
-
-/* Auth */
-/* Login Page & Register Page & Reset Password Page*/
-.login-page,
-.register-page,
-.reset-password-page,
-.user-details-page,
-.email-verification-page {
-  width: 100%;
-  height: 90vh;
-  background: url("./assets/Img/loginBg.jpg");
-  background-position: center;
-  background-size: cover;
-  background-repeat: no-repeat;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
-.left-login,
-.left-register,
-.left-reset-password,
-.left-user-details,
-.left-email-verification {
-  width: 50%;
-  height: 100%;
-}
-.right-login,
-.right-register,
-.right-reset-password,
-.right-user-detail,
-.right-email-verification{
-  width: 50%;
-  height: 100%;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
-.login-card {
-  width: 50%;
-  height: 65%;
-  background-color: rgba(255, 255, 255, 0.253) !important;
-}
-
-/* Register Card */
-.register-card {
-  width: 50%;
-  height: 70%;
-  background-color: rgba(255, 255, 255, 0.253) !important;
-}
-.link {
-  color: #2196f3;
-}
-.link:visited {
-  color: #bbdefb;
-}
-
-/* Reset Password Page */
-.reset-password-card {
-  width: 50%;
-  height: 50%;
-  background-color: rgba(255, 255, 255, 0.253) !important;
-}
-
-/* Verification Form */
-.verification-form{
-  width: 65%;
-  height: 60%;
-  background-color: rgba(255, 255, 255, 0.253) !important;
-}
-
-
-/* HomePage CSS */
-.home-page{
-  width: 100%;
-  height: 90vh;
-  background: url("./assets/Img/loginBg.jpg");
-  background-position: center;
-  background-size: cover;
-  background-repeat: no-repeat;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
-.home{
-  width: 50%;
-  height: 100%;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
-
-
-/* Responsive For 768 PX */
-@media (max-width: 768px) {
-  html {
-    font-size: 45%;
-  }
-  .login-card {
-    width: 80%;
-  }
-}
-
-/* Responsive For 450 PX */
-@media (max-width: 450px) {
-  .left-login {
-    width: 0%;
-  }
-  .right-login {
-    width: 100%;
-  }
-  .login-card {
-    width: 70%;
-    height: 65%;
-  }
-}
-
-/* User Dashboard Page */
-/* All User & All User Data */

@@ -55,7 +55,7 @@ const LoginForm = () => {
     onSubmit: (values) => {
       console.log(values);
       dispatch(loginUser(values));
-      navigate('/dashboard')
+      // navigate('/dashboard')
       console.log("Submit Data");
       // alert(JSON.stringify(values, null, 2));
       dispatch(loginUser(values));

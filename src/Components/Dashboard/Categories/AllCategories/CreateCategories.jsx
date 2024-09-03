@@ -16,40 +16,40 @@ const CustomLabel = styled.label(({ theme }) => ({
   letterSpacing: ".2rem",
 }));
 
-function UpdateUser({ open, handleClose }) {
+function CreateCategories({ open, handleClose }) {
 
-  const [userUpdate, setUserUpdate] = React.useState({
-    name : "", 
-    email : "",
-    password : ""
-  });
+//   const [userUpdate, setUserUpdate] = React.useState({
+//     name : "", 
+//     email : "",
+//     password : ""
+//   });
 
-  const {name, email, password} = userUpdate;
+//   const {name, email, password} = userUpdate;
 
-  const {editUser} = useSelector(state => state.auth);
-  console.log(editUser, "Edit User From User Update");
-
-
-  React.useEffect(()=>{
-    setUserUpdate({
-      name : editUser.user.name,
-      email : editUser.user.email,
-      password : editUser.user.password
-    })
-  },[editUser]);
+//   const {editUser} = useSelector(state => state.auth);
+  // console.log(editUser, "Edit User From User Update");
 
 
-  const handleChange = (e) => {
-    setUserUpdate({
-      ...userUpdate,
-      [e.target.name] : e.target.value
-    })
-  }
+//   React.useEffect(()=>{
+//     setUserUpdate({
+//       name : editUser.user.name,
+//       email : editUser.user.email,
+//       password : editUser.user.password
+//     })
+//   },[editUser]);
 
-  const handleUpdate = (e) => {
-    console.log("Update Successfully!!");
 
-  }
+//   const handleChange = (e) => {
+//     setUserUpdate({
+//       ...userUpdate,
+//       [e.target.name] : e.target.value
+//     })
+//   }
+
+//   const handleUpdate = (e) => {
+//     console.log("Update Successfully!!");
+
+//   }
 
   return (
     <React.Fragment>
@@ -69,11 +69,11 @@ function UpdateUser({ open, handleClose }) {
         }}
       >
         <DialogTitle sx={{ fontSize: "2rem", fontWeight: "bold" }}>
-          Update User
+          Create Product Categories
         </DialogTitle>
         <DialogContent>
           <DialogContentText sx={{ fontSize: "1.6rem", fontWeight: "bold" }}>
-            Update User Details Carefully-
+          
           </DialogContentText>
           <TextField
             autoFocus
@@ -85,9 +85,9 @@ function UpdateUser({ open, handleClose }) {
             type="name"
             fullWidth
             variant="standard"
-            name="name"
-            value={name}
-            onChange={handleChange}
+            // name="name"
+            // value={name}
+            // onChange={handleChange}
           />
           <TextField
             autoFocus
@@ -99,32 +99,36 @@ function UpdateUser({ open, handleClose }) {
             type="email"
             fullWidth
             variant="standard"
-            name="email"
-            value={email}
-            onChange={handleChange}
+            // name="email"
+            // value={email}
+            // onChange={handleChange}
           />
           <TextField
             autoFocus
             required
             margin="dense"
             id="password"
-           
+        
             label={<CustomLabel>Password</CustomLabel>}
             type="password"
             fullWidth
             variant="standard"
-            name="password"
-            value={password}
-            onChange={handleChange}
+            // name="password"
+            // value={password}
+            // onChange={handleChange}
           />
         </DialogContent>
         <DialogActions>
-          <Button onClick={handleClose} sx={{fontSize:"1.2rem"}}>Cancel</Button>
-          <Button type="submit" sx={{fontSize:"1.2rem"}} onClick={handleUpdate}>Update User</Button>
+          <Button 
+          onClick={handleClose}
+           sx={{fontSize:"1.2rem"}}>Cancel</Button>
+          <Button type="submit" sx={{fontSize:"1.2rem"}}
+        //    onClick={handleUpdate}
+           >Update User</Button>
         </DialogActions>
       </Dialog>
     </React.Fragment>
   );
 }
 
-export default UpdateUser;
+export default CreateCategories;

@@ -10,7 +10,8 @@ import {
 import React, { useState } from "react";
 import MenuIcon from "@mui/icons-material/Menu";
 import PersonIcon from "@mui/icons-material/Person";
-import AllUser from "../../../Components/Dashboard/ALL-User/AllUser";
+// import AllUser from "../../../Components/Dashboard/AllUser/AllUser";
+import AllUser from "../Users/AllUser/AllUser";
 
 const UsersDashboard = () => {
   const [isClosing, setIsClosing] = useState(false);
@@ -138,11 +139,12 @@ const UsersDashboard = () => {
             flexDirection: "column",
             backgroundColor: "#0c0a0a",
             alignItems: "center",
+
             justifyContent: "center",
           }}
         >
           <Box sx={{ width: "100%", height: "100%" }}>
-            <AllUser/>
+            <AllUser />
           </Box>
         </Box>
       </Box>

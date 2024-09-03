@@ -9,19 +9,21 @@ import ResetPasswordPage from "./Pages/Auth/ResetPasswordPage";
 import HomePage from "./Pages/Home/HomePage";
 import  Dashboard  from "./Pages/Dashboard/Dashboard";
 import EmailVerification from "./Pages/Auth/EmailVerification";
+import AppRoute from "./Routes/AppRoute";
 
 const App = () => {
   return (
     <BrowserRouter>
-      <Navbar />
-      <Routes>
-        <Route path="/" element={<HomePage />} />
+      {/* <Navbar /> */}
+      {/* <Routes> */}
+        {/* <Route path="/" element={<HomePage />} />
         <Route path="/login" element={<LoginPage />} />
         <Route path="/register" element={<RegisterPage />} />
         <Route path="/reset-password" element={<ResetPasswordPage />} />
-        <Route path="/email-verification" element={<EmailVerification/>} />
-        <Route path="/dashboard" element={<Dashboard />} />
-      </Routes>
+        <Route path="/email-verification" element={<EmailVerification/>} /> */}
+        {/* <Route path="/dashboard" element={<Dashboard />} />
+      </Routes> */}
+      <AppRoute/>
       <ToastContainer />
     </BrowserRouter>
   );

@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import Box from "@mui/material/Box";
 import Divider from "@mui/material/Divider";
 import List from "@mui/material/List";
@@ -10,25 +10,48 @@ import { Button, Drawer } from "@mui/material";
 import KeyboardArrowRightIcon from "@mui/icons-material/KeyboardArrowRight";
 
 import userDefaultImage from "../../assets/Img/userDefaultImage.png";
-import ProductsDashboard from "./Products/ProductsDashboard";
-import UsersDashboard from "./Users/UsersDashboard";
-import CategoriesDashboard from "./Categories/CategoriesDashboard";
+// import ProductsDashboard from "./Products/ProductsDashboard";
+// import UsersDashboard from "./Users/UsersDashboard";
+// import CategoriesDashboard from "./Categories/CategoriesDashboard";
 import { useNavigate } from "react-router-dom";
+import { logoutUser } from "../../Redux/auth/authSlice";
+import UsersDashboard from "../../Components/Dashboard/Users/UsersDashboard";
+// import { logoutUser } from "../../Redux/auth/authSlice";
+import CategoriesDashboard from '../../Components/Dashboard/Categories/CategoriesDashboard'
+import ProductsDashboard from '../../Components/Dashboard/Products/ProductsDashboard'
 
 const drawerWidth = 345;
 
 const Dashboard = () => {
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
   const [selectedSection, setSelectedSection] = useState(null); // State to track selected section
-  const { user, isSuccess , registerUser} = useSelector((state) => state.auth);
-console.log(user, isSuccess, "dahboard page")
+  const { user, isSuccess, registerUser, allUsers } = useSelector(
+    (state) => state.auth
+  );
+  // console.log(user, isSuccess, "dahboard page")
   // const token = user.token;
   // console.log(token, "dashboard")
 
-
-  console.log(registerUser, "dahboard register")
+  // console.log(allUsers,"all users")
+  // console.log(registerUser, "dahboard register")
 
   const handleSectionChange = (section) => {
     setSelectedSection(section);
+  };
+
+  useEffect(() => {
+    if (!localStorage.getItem("token")) {
+      navigate("/login");
+    } else {
+      navigate("/dashboard");
+    }
+  }, []);
+
+  const logout = () => {
+    console.log("Logout Successfully!");
+    dispatch(logoutUser());
+    navigate("/login");
   };
 
   const drawer = (
@@ -113,7 +136,7 @@ console.log(user, isSuccess, "dahboard page")
           >
             <ListItemText
               primary="Products"
-              sx={{ color: "white", fontSize: "3rem" }} // Increase font size here
+              sx={{ color: "white", fontSize: "3rem" }} 
             />
             <Button sx={{ color: "white" }}>
               <KeyboardArrowRightIcon fontSize="large" />
@@ -127,7 +150,7 @@ console.log(user, isSuccess, "dahboard page")
           >
             <ListItemText
               primary="Users"
-              sx={{ color: "white", fontSize: "5rem" }} 
+              sx={{ color: "white", fontSize: "5rem" }}
             />
             <Button sx={{ color: "white" }}>
               <KeyboardArrowRightIcon fontSize="large" />
@@ -141,7 +164,7 @@ console.log(user, isSuccess, "dahboard page")
           >
             <ListItemText
               primary="Categories"
-              sx={{ color: "white", fontSize: "5rem" }} 
+              sx={{ color: "white", fontSize: "5rem" }}
             />
             <Button sx={{ color: "white" }}>
               <KeyboardArrowRightIcon fontSize="large" />
@@ -154,16 +177,17 @@ console.log(user, isSuccess, "dahboard page")
           variant="contained"
           sx={{
             width: "100%",
-            py:"1.5rem",
-            fontSize:"1.4rem",
-            fontWeight:"bold",
-            color:"black",
+            py: "1.5rem",
+            fontSize: "1.4rem",
+            fontWeight: "bold",
+            color: "black",
             backgroundColor: "#D4AF37",
             "&:hover": {
               backgroundColor: "#b0bec5",
               color: "#0c0a0a",
             },
           }}
+          onClick={logout}
         >
           LogOut
         </Button>
@@ -175,11 +199,11 @@ console.log(user, isSuccess, "dahboard page")
     switch (selectedSection) {
       case "products":
         return <ProductsDashboard />;
-        case "users":
-            return <UsersDashboard />;
-            case "categories":
-                return <CategoriesDashboard/>;
-      // Add cases for other sections here
+      case "users":
+        return <UsersDashboard />;
+      case "categories":
+        return <CategoriesDashboard />;
+ 
       default:
         return <UsersDashboard />;
     }
@@ -195,6 +219,8 @@ console.log(user, isSuccess, "dahboard page")
           "& .MuiDrawer-paper": {
             width: drawerWidth,
             boxSizing: "border-box",
+            overflow: "hidden",
+            height: "auto",
           },
         }}
       >
