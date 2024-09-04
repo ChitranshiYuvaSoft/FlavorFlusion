@@ -18,8 +18,7 @@ import { Link } from "react-router-dom";
 import { useFormik } from "formik";
 import * as yup from "yup";
 import { useDispatch } from "react-redux";
-import {  registerUsers } from "../../Redux/auth/authSlice";
-// import { registerUser } from "../../Redux/auth/authSlice";
+import { registerUsers } from "../../Redux/auth/authSlice";
 
 // Use Yup Validation On Register Form
 const validationSchema = yup.object({
@@ -36,17 +35,9 @@ const validationSchema = yup.object({
 
 const RegisterPage = () => {
   const navigate = useNavigate();
-  const { registerUser,user, isSuccess, isError, message, isLoading } =
+  const { registerUser,  isSuccess, isError, message, isLoading } =
     useSelector((state) => state.auth);
-  // console.log(registerUser, "dataRegister");
-  // useEffect(() => {
-  //   if (user || isSuccess) {
-  //     navigate("/userdashboard");
-  //   }
-  //   if (isError && message) {
-  //     alert("Something Went Wrong!!");
-  //   }
-  // }, [user, isSuccess, isError, message]);
+
 
   const dispatch = useDispatch();
   const [showPassword, setShowPassword] = React.useState(false);
@@ -73,26 +64,24 @@ const RegisterPage = () => {
     validationSchema: validationSchema,
     onSubmit: (values) => {
       alert(values);
-      console.log(values)
+      console.log(values);
       dispatch(registerUsers(values));
-      // navigate("/email-verification");
     },
   });
 
-  useEffect(()=>{
-    if(registerUser && isSuccess){
-      navigate('/email-verification');
-    }else if(isError && message){
+  useEffect(() => {
+    if (registerUser && isSuccess) {
+      navigate("/email-verification");
+    } else if (isError && message) {
       alert(message);
     }
-  },[registerUser, isSuccess, isError, message])
+  }, [registerUser, isSuccess, isError, message]);
 
   return (
     <>
       <Box className="register-page">
         <Box className="left-register"></Box>
         <Box className="right-register">
-          {/* <RegisterForm/> */}
           {isLoading ? (
             <Loading />
           ) : (
@@ -109,7 +98,7 @@ const RegisterPage = () => {
                   <CardContent
                     sx={{
                       width: "100%",
-                      height: "70%",
+                      height: "68%",
                       display: "flex",
                       alignItems: "start",
                       justifyContent: "space-around",
@@ -146,7 +135,7 @@ const RegisterPage = () => {
                         sx={{
                           "& .MuiInputBase-input": {
                             color: "white",
-                            fontSize: "1.5rem", // Adjust font size here
+                            fontSize: "1.5rem", 
                           },
                         }}
                         name="name"
@@ -263,7 +252,7 @@ const RegisterPage = () => {
                   <CardActions
                     sx={{
                       width: "100%",
-                      height: "30%",
+                      height: "32%",
                       display: "flex",
                       alignItems: "center",
                       justifyContent: "space-around",
@@ -275,7 +264,7 @@ const RegisterPage = () => {
                       variant="contained"
                       fullWidth
                       sx={{
-                        paddingBlock: "1rem",
+                        paddingBlock: "0.7rem",
                         fontSize: "1.4rem",
                         backgroundColor: "#D4AF37",
                         color: "black",
@@ -287,7 +276,7 @@ const RegisterPage = () => {
                       }}
                       type="submit"
                     >
-                      Sign Up
+                      Register
                     </Button>
                     <Button
                       size="small"
@@ -295,7 +284,7 @@ const RegisterPage = () => {
                       fullWidth
                       sx={{
                         marginLeft: "0rem !important",
-                        paddingBlock: "1rem",
+                        paddingBlock: "0.7rem",
                         fontSize: "1.4rem",
                         backgroundColor: "#fff",
                         color: "black",
@@ -314,8 +303,8 @@ const RegisterPage = () => {
                 <Box sx={{ width: "100%", height: "10%" }}>
                   <Typography align="center" variant="h6">
                     You have already account{" "}
-                    <Link to={"/"} className="link">
-                      Sign In
+                    <Link to={"/login"} className="link">
+                      Login
                     </Link>
                   </Typography>
                 </Box>

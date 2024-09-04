@@ -19,7 +19,7 @@ import { Link, useNavigate } from "react-router-dom";
 import { useSelector } from "react-redux";
 
 const Navbar = () => {
- const {user} = useSelector(state => state.auth)
+  const { user } = useSelector((state) => state.auth);
   const [drawerOpen, setDrawerOpen] = React.useState(false);
   const theme = useTheme();
   const isMobile = useMediaQuery(theme.breakpoints.down("sm"));
@@ -33,8 +33,29 @@ const Navbar = () => {
   };
 
   const drawer = (
-    <Box sx={{ width: 250, height:"100%" }} className="drawer" role="presentation" onClick={toggleDrawer(false)} onKeyDown={toggleDrawer(false)}>
-     <Box><Typography variant="h4" sx={{ width:"100%", height:"10vh", color:"white", display:"flex", alignItems:"center", justifyContent:"start", marginLeft:"3rem"}}><span style={{ color: "#D4AF37" }}>Flavor</span>Fusion</Typography></Box>
+    <Box
+      sx={{ width: 250, height: "100%" }}
+      className="drawer"
+      role="presentation"
+      onClick={toggleDrawer(false)}
+      onKeyDown={toggleDrawer(false)}
+    >
+      <Box>
+        <Typography
+          variant="h4"
+          sx={{
+            width: "100%",
+            height: "10vh",
+            color: "white",
+            display: "flex",
+            alignItems: "center",
+            justifyContent: "start",
+            marginLeft: "3rem",
+          }}
+        >
+          <span style={{ color: "#D4AF37" }}>Flavor</span>Fusion
+        </Typography>
+      </Box>
       <List>
         <ListItem to="/register">
           <ListItemText primary="Register" />
@@ -47,7 +68,7 @@ const Navbar = () => {
   );
 
   return (
-    <Box sx={{ flexGrow: 1 , width:"100%", height:"10vh"}}>
+    <Box sx={{ flexGrow: 1, width: "100%", height: "10vh" }}>
       <AppBar position="static" className="navbar">
         <Toolbar>
           {isMobile && (
@@ -66,32 +87,20 @@ const Navbar = () => {
             variant="h4"
             component="div"
             onClick={() => navigate("/")}
-            sx={{ flexGrow: 1, fontWeight: "900", cursor: 'pointer' }}
+            sx={{ flexGrow: 1, fontWeight: "900", cursor: "pointer" }}
           >
             <span style={{ color: "#D4AF37" }}>Flavor</span>Fusion
           </Typography>
           <Box
             sx={{
-              display: { xs: 'none', sm: 'flex' },
+              display: { xs: "none", sm: "flex" },
               width: "auto",
               alignItems: "center",
               justifyContent: "space-around",
             }}
           >
             {user ? (
-             
-               <>
-                <Link to={"/userdashboard"} style={{ color: "white" }}>
-                <Button color="inherit" sx={{ fontSize: "1.2rem" }}>
-                 Dashboard
-                </Button>
-               </Link>
-               {/* <Link to={"/userdashboard"} style={{ color: "white" }}>
-                <Button color="inherit" sx={{ fontSize: "1.2rem" }}>
-                 Products
-                </Button>
-               </Link> */}
-               </>
+              <></>
             ) : (
               <>
                 <Link to={"/register"} style={{ color: "white" }}>

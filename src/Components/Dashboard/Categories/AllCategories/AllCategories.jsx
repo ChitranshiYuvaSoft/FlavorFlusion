@@ -15,10 +15,15 @@ import React, { useEffect, useState } from "react";
 import HomeIcon from "@mui/icons-material/Home";
 import styled from "styled-components";
 import { useDispatch, useSelector } from "react-redux";
-import { createCategory, getAllCategories } from "../../../../Redux/Categories/categoriesSlice";
+import {
+  createCategory,
+  editCategory,
+  getAllCategories,
+  updateCategory,
+} from "../../../../Redux/Categories/categoriesSlice";
 import DeleteIcon from "@mui/icons-material/Delete";
 import EditIcon from "@mui/icons-material/Edit";
-import PlaylistAddIcon from '@mui/icons-material/PlaylistAdd';
+import PlaylistAddIcon from "@mui/icons-material/PlaylistAdd";
 // import AddCircleOutlineIcon from '@mui/icons-material/AddCircleOutline';
 const allCategoriesData = Array.from({ length: 100 }, (_, index) => ({
   id: index + 1,
@@ -28,11 +33,14 @@ const allCategoriesData = Array.from({ length: 100 }, (_, index) => ({
   updatedAt: `2024-01-${(index % 30) + 1}`,
 }));
 
+
+
+
 const AllCategories = () => {
-  const { allCategories, isSuccess } = useSelector((state) => state.category);
-  console.log(allCategories, "cater all all");
+  const { allCategories, isSuccess, edit } = useSelector(
+    (state) => state.category
+  );
   const token = localStorage.getItem("token");
-  console.log(token, "cater all ");
 
   // API Fetch
   const dispatch = useDispatch();
@@ -84,31 +92,67 @@ const AllCategories = () => {
 
   // Create Categary
 
-  const [categoryData , setCategoryData] = useState({
-    name :"",
-    status: false,
+  const [categoryData, setCategoryData] = useState({
+    name: "",
+    status: "",
   });
-console.log(categoryData, "CategoryData")
-  const {name , status} = categoryData;
+  const { name, status } = categoryData;
 
   const handleChange = (e) => {
     setCategoryData({
       ...categoryData,
-      [e.target.name] : e.target.value
-    })
-  }
+      [e.target.name]: e.target.value,
+    });
+  };
+
+  // Create and Update Category
+
   const handleCreateCategory = (e) => {
     e.preventDefault();
     console.log("Create Category");
-    dispatch(createCategory())
-    alert("Successfully Create Category!!")
-  }
+    if (edit.isEdit) {
+      dispatch(
+        updateCategory({
+          _id: edit.category._id,
+          name: name,
+          status: status,
+        })
+      );
+      alert("Successfully Update Category!!");
+    } else {
+      dispatch(createCategory(categoryData));
+      alert("Successfully Create Category!!");
+    }
+    setCategoryData({
+      name : "",
+      status : ""
+    });
+  };
 
+  const handleEditCategory = (category) => {
+    alert("edit Category");
+    console.log(category);
+    dispatch(editCategory(category));
+  };
 
-
+  useEffect(() => {
+    setCategoryData({
+      name: edit.category.name,
+      status: edit.category.status,
+    });
+  }, [edit]);
+console.log(allCategories)
   return (
     <>
-      <Box sx={{ width: "100%", height: "10%" , display: "flex",alignItems:"center", justifyContent:"space-between"}}>
+      <Box
+        sx={{
+          width: "100%",
+          height: "10%",
+          display: "flex",
+          alignItems: "center",
+          justifyContent: "space-between",
+        }}
+      >
         <Typography
           sx={{
             color: "white",
@@ -123,32 +167,50 @@ console.log(categoryData, "CategoryData")
           />{" "}
           / Categories
         </Typography>
-        <Box sx={{width:"30%", height:"100%", display: "flex",
+        <Box
+          sx={{
+            width: "30%",
+            height: "100%",
+            display: "flex",
             alignItems: "end",
-            justifyContent: "center",}}>
-         
-         <TextField
-         placeholder="Create Category"
-         sx={{padding:"0rem",  borderRadius:"0rem", fontSize:"2rem", backgroundColor:"white"}}
-         name="name"
-         value={name}
-         onChange={handleChange}/>
-          <select className="category-dropdown" 
+            justifyContent: "center",
+          }}
+        >
+          <TextField
+            placeholder="Create Category"
+            sx={{
+              padding: "0rem",
+              borderRadius: "0rem",
+              fontSize: "2rem",
+              backgroundColor: "white",
+            }}
+            name="name"
+            value={name}
+            onChange={handleChange}
+          />
+          <select
+            className="category-dropdown"
             name="status"
             value={status}
             onChange={handleChange}
+            // placeholder="Select Category"
           >
+            <option >Select Category</option>
             <option value="true">True</option>
             <option value="false">Flase</option>
           </select>
           <Button
             variant="contained"
             color="success"
-            sx={{ fontSize: "1.2rem", paddingBlock: "0.9rem", borderRadius:"0rem" }}
+            sx={{
+              fontSize: "1.2rem",
+              paddingBlock: "0.9rem",
+              borderRadius: "0rem",
+            }}
             type="submit"
             onClick={handleCreateCategory}
           >
-            <PlaylistAddIcon  sx={{fontSize:"3rem"}}/>
+            <PlaylistAddIcon sx={{ fontSize: "3rem" }} />
           </Button>
         </Box>
       </Box>
@@ -303,7 +365,7 @@ console.log(categoryData, "CategoryData")
                         variant="contained"
                         color="warning"
                         sx={{ fontSize: "1.2rem", paddingBlock: "0.95rem" }}
-                        // onClick={() => handleUserEdit(user)}
+                        onClick={() => handleEditCategory(category)}
                       >
                         <EditIcon />
                       </Button>

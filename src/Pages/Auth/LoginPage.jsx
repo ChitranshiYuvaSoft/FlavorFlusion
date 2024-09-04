@@ -1,14 +1,8 @@
 import React, { useEffect } from "react";
-import loginImg from '../../assets/Img/loginImg.png'
 import { Box } from "@mui/material";
-// import LoginForm from "../../Components/Auth/LoginForm";
 import { useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import Loading from "../../Components/Loading/Loading";
-import { toast } from "react-toastify";
-import { errorMessage } from "../../Components/Cases/Cases";
-
-// import Box from "@mui/material/Box";
 import Card from "@mui/material/Card";
 import CardActions from "@mui/material/CardActions";
 import CardContent from "@mui/material/CardContent";
@@ -25,7 +19,6 @@ import { loginUser } from "../../Redux/auth/authSlice";
 import * as yup from "yup";
 import { useFormik } from "formik";
 
-
 // Use Yup Validation On Login Form
 const validationSchema = yup.object({
   email: yup
@@ -40,11 +33,7 @@ const validationSchema = yup.object({
 
 const LoginPage = () => {
   const navigate = useNavigate();
-  const { user, isSuccess, isError, message, isLoading} = useSelector((state) => state.auth);
-
- 
-
-// console.log(user)
+  const { user, isLoading } = useSelector((state) => state.auth);
 
   const [showPassword, setShowPassword] = React.useState(false);
 
@@ -74,105 +63,59 @@ const LoginPage = () => {
     },
   });
 
+  useEffect(() => {
+    if (localStorage.getItem("token")) {
+      navigate("/dashboard");
+    } else {
+      navigate("/login");
+    }
+  }, [user]);
 
-    useEffect(() => {
-      // const token = localStorage.getItem("token")
-      if (localStorage.getItem("token")) {
-        navigate("/dashboard");
-      } else  {
-        navigate("/login");
-      }
-    },[user]);
-
-  
-  
   return (
     <>
       <Box className="login-page">
         <Box className="left-login"></Box>
         <Box className="right-login">
-          {/* <LoginForm /> */}
-          {isLoading ? ( 
-            <Loading/>
+          {isLoading ? (
+            <Loading />
           ) : (
-          <>
-            <Card
-              className="register-card"
-              sx={{ paddingBlock: "1.5rem", paddingInline: "1rem" }}
-            >
-              <form
-                style={{ width: "100%", height: "90%" }}
-                action=""
-                onSubmit={formik.handleSubmit}
+            <>
+              <Card
+                className="register-card"
+                sx={{ paddingBlock: "1.5rem", paddingInline: "1rem" }}
               >
-                <CardContent
-                  sx={{
-                    width: "100%",
-                    height: "70%",
-                    display: "flex",
-                    alignItems: "start",
-                    justifyContent: "space-around",
-                    flexDirection: "column",
-                  }}
+                <form
+                  style={{ width: "100%", height: "90%" }}
+                  action=""
+                  onSubmit={formik.handleSubmit}
                 >
-                  <Typography
-                    sx={{ letterSpacing: 3 }}
-                    color="white"
-                    gutterBottom
-                    variant="h4"
-                  >
-                    Sing In
-                  </Typography>
-
-                  <Box
+                  <CardContent
                     sx={{
                       width: "100%",
+                      height: "68%",
                       display: "flex",
-                      alignItems: "flex-end",
+                      alignItems: "start",
+                      justifyContent: "space-around",
+                      flexDirection: "column",
                     }}
                   >
-                    <AttachEmailIcon
-                      sx={{
-                        color: "white",
-                        mr: "1.5rem",
-                        my: 0.5,
-                        fontSize: "3rem",
-                      }}
-                    />
-                    <TextField
-                      label={<CustomLabel>Email</CustomLabel>}
-                      variant="standard"
-                      fullWidth
-                      sx={{
-                        "& .MuiInputBase-input": {
-                          color: "white",
-                          fontSize: "1.5rem",
-                        },
-                      }}
-                      name="email"
-                      value={formik.values.email}
-                      onChange={formik.handleChange}
-                      onBlur={formik.handleBlur}
-                      error={
-                        formik.touched.email && Boolean(formik.errors.email)
-                      }
-                      helperText={formik.touched.email && formik.errors.email}
-                    />
-                  </Box>
+                    <Typography
+                      sx={{ letterSpacing: 3 }}
+                      color="white"
+                      gutterBottom
+                      variant="h4"
+                    >
+                      Sing In
+                    </Typography>
 
-                  <Box
-                    sx={{
-                      width: "100%",
-                      display: "flex",
-                      alignItems: "flex-center",
-                      justifyContent: "center",
-                      // marginTop: "2rem",
-                    }}
-                  >
-                    {showPassword ? (
-                      <VisibilityOff
-                        onClick={handleClickShowPassword}
-                        onMouseDown={handleMouseDownPassword}
+                    <Box
+                      sx={{
+                        width: "100%",
+                        display: "flex",
+                        alignItems: "flex-end",
+                      }}
+                    >
+                      <AttachEmailIcon
                         sx={{
                           color: "white",
                           mr: "1.5rem",
@@ -180,111 +123,151 @@ const LoginPage = () => {
                           fontSize: "3rem",
                         }}
                       />
-                    ) : (
-                      <Visibility
-                        onClick={handleClickShowPassword}
-                        onMouseDown={handleMouseDownPassword}
+                      <TextField
+                        label={<CustomLabel>Email</CustomLabel>}
+                        variant="standard"
+                        fullWidth
                         sx={{
-                          color: "white",
-                          mr: "1.5rem",
-                          my: 0.5,
-                          fontSize: "3rem",
-                        }}
-                      />
-                    )}
-
-                    <TextField
-                      label={<CustomLabel>Password</CustomLabel>}
-                      variant="standard"
-                      fullWidth
-                      sx={{
-                        color: "white",
-                        fontSize: "60rem",
-                        "& .MuiOutlinedInput-root": {
-                          "&:hover .MuiOutlinedInput-notchedOutline": {
-                            borderColor: "green",
+                          "& .MuiInputBase-input": {
+                            color: "white",
+                            fontSize: "1.5rem",
                           },
-                        },
-                        "& .MuiInputBase-input": {
+                        }}
+                        name="email"
+                        value={formik.values.email}
+                        onChange={formik.handleChange}
+                        onBlur={formik.handleBlur}
+                        error={
+                          formik.touched.email && Boolean(formik.errors.email)
+                        }
+                        helperText={formik.touched.email && formik.errors.email}
+                      />
+                    </Box>
+
+                    <Box
+                      sx={{
+                        width: "100%",
+                        display: "flex",
+                        alignItems: "flex-center",
+                        justifyContent: "center",
+                      }}
+                    >
+                      {showPassword ? (
+                        <VisibilityOff
+                          onClick={handleClickShowPassword}
+                          onMouseDown={handleMouseDownPassword}
+                          sx={{
+                            color: "white",
+                            mr: "1.5rem",
+                            my: 0.5,
+                            fontSize: "3rem",
+                          }}
+                        />
+                      ) : (
+                        <Visibility
+                          onClick={handleClickShowPassword}
+                          onMouseDown={handleMouseDownPassword}
+                          sx={{
+                            color: "white",
+                            mr: "1.5rem",
+                            my: 0.5,
+                            fontSize: "3rem",
+                          }}
+                        />
+                      )}
+
+                      <TextField
+                        label={<CustomLabel>Password</CustomLabel>}
+                        variant="standard"
+                        fullWidth
+                        sx={{
                           color: "white",
-                          fontSize: "1.4rem",
+                          fontSize: "60rem",
+                          "& .MuiOutlinedInput-root": {
+                            "&:hover .MuiOutlinedInput-notchedOutline": {
+                              borderColor: "green",
+                            },
+                          },
+                          "& .MuiInputBase-input": {
+                            color: "white",
+                            fontSize: "1.4rem",
+                          },
+                        }}
+                        name="password"
+                        value={formik.values.password}
+                        onChange={formik.handleChange}
+                        onBlur={formik.handleBlur}
+                        error={
+                          formik.touched.password &&
+                          Boolean(formik.errors.password)
+                        }
+                        helperText={
+                          formik.touched.password && formik.errors.password
+                        }
+                      />
+                    </Box>
+                  </CardContent>
+                  <CardActions
+                    sx={{
+                      width: "100%",
+                      height: "32%",
+                      display: "flex",
+                      alignItems: "center",
+                      justifyContent: "space-around",
+                      flexDirection: "column",
+                    }}
+                  >
+                    <Button
+                      size="small"
+                      variant="contained"
+                      fullWidth
+                      sx={{
+                        paddingBlock: "0.7rem",
+                        fontSize: "1.4rem",
+                        backgroundColor: "#D4AF37",
+                        color: "black",
+                        fontWeight: "bold",
+                        "&:hover": {
+                          backgroundColor: "#0c0a0a",
+                          color: "white",
                         },
                       }}
-                      name="password"
-                      value={formik.values.password}
-                      onChange={formik.handleChange}
-                      onBlur={formik.handleBlur}
-                      error={
-                        formik.touched.password &&
-                        Boolean(formik.errors.password)
-                      }
-                      helperText={
-                        formik.touched.password && formik.errors.password
-                      }
-                    />
-                  </Box>
-                </CardContent>
-                <CardActions
-                  sx={{
-                    width: "100%",
-                    height: "30%",
-                    display: "flex",
-                    alignItems: "center",
-                    justifyContent: "space-around",
-                    flexDirection: "column",
-                  }}
-                >
-                  <Button
-                    size="small"
-                    variant="contained"
-                    fullWidth
-                    sx={{
-                      paddingBlock: "1rem",
-                      fontSize: "1.4rem",
-                      backgroundColor: "#D4AF37",
-                      color: "black",
-                      fontWeight: "bold",
-                      "&:hover": {
-                        backgroundColor: "#0c0a0a",
-                        color: "white",
-                      },
-                    }}
-                    type="submit"
-                  >
-                    Sign In
-                  </Button>
-                  <Button
-                    size="small"
-                    variant="contained"
-                    fullWidth
-                    sx={{
-                      marginLeft: "0rem !important",
-                      paddingBlock: "1rem",
-                      fontSize: "1.4rem",
-                      backgroundColor: "#fff",
-                      color: "black",
-                      fontWeight: "bold",
-                      "&:hover": {
-                        backgroundColor: "#0c0a0a",
-                        color: "white",
-                      },
-                    }}
-                  >
-                    Sign In With Google
-                  </Button>
-                </CardActions>
-              </form>
+                      type="submit"
+                    >
+                      Login
+                    </Button>
+                    <Button
+                      size="small"
+                      variant="contained"
+                      fullWidth
+                      sx={{
+                        marginLeft: "0rem !important",
+                        paddingBlock: "0.7rem",
+                        fontSize: "1.4rem",
+                        backgroundColor: "#fff",
+                        color: "black",
+                        fontWeight: "bold",
+                        "&:hover": {
+                          backgroundColor: "#0c0a0a",
+                          color: "white",
+                        },
+                      }}
+                    >
+                      Sign In With Google
+                    </Button>
+                  </CardActions>
+                </form>
 
-              <Box sx={{ width: "100%", height: "10%" }}>
-                <Typography align="center" variant="h6">
-                  You have already account{" "}
-                  <Link to={"/"} className="link">
-                    Sign In
-                  </Link>
-                </Typography>
-              </Box>
-            </Card>
-          </>
+                <Box sx={{ width: "100%", height: "10%" }}>
+                  <Typography align="center" variant="h6">
+                    You have already account{" "}
+                    <Link to={"/register"} className="link">
+                      Register
+                    </Link>
+                  </Typography>
+                </Box>
+              </Card>
+            </>
           )}
         </Box>
       </Box>

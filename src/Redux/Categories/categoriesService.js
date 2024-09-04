@@ -14,9 +14,17 @@ const addCategory = async(categoryData) => {
     return response;
 }
 
+const updatedCategory = async(categoryData) => {
+    console.log(categoryData, "from Service");
+    const response = await axiosInstance.put(`/category/${categoryData._id}`, categoryData);
+    console.log(response.data);
+    return response.data;
+}
+
 const categoriesServices = {
     allCategories,
     addCategory,
+    updatedCategory,
 }
 
 export default categoriesServices;

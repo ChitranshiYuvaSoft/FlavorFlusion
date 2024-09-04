@@ -17,39 +17,35 @@ const CustomLabel = styled.label(({ theme }) => ({
 }));
 
 function UpdateUser({ open, handleClose }) {
-
   const [userUpdate, setUserUpdate] = React.useState({
-    name : "", 
-    email : "",
-    password : ""
+    name: "",
+    email: "",
+    password: "",
   });
 
-  const {name, email, password} = userUpdate;
+  const { name, email, password } = userUpdate;
 
-  const {editUser} = useSelector(state => state.auth);
+  const { editUser } = useSelector((state) => state.auth);
   // console.log(editUser, "Edit User From User Update");
 
-
-  React.useEffect(()=>{
+  React.useEffect(() => {
     setUserUpdate({
-      name : editUser.user.name,
-      email : editUser.user.email,
-      password : editUser.user.password
-    })
-  },[editUser]);
-
+      name: editUser.user.name,
+      email: editUser.user.email,
+      password: editUser.user.password,
+    });
+  }, [editUser]);
 
   const handleChange = (e) => {
     setUserUpdate({
       ...userUpdate,
-      [e.target.name] : e.target.value
-    })
-  }
+      [e.target.name]: e.target.value,
+    });
+  };
 
   const handleUpdate = (e) => {
     console.log("Update Successfully!!");
-
-  }
+  };
 
   return (
     <React.Fragment>
@@ -80,7 +76,6 @@ function UpdateUser({ open, handleClose }) {
             required
             margin="dense"
             id="name"
-            
             label={<CustomLabel>Email Address</CustomLabel>}
             type="name"
             fullWidth
@@ -94,7 +89,6 @@ function UpdateUser({ open, handleClose }) {
             required
             margin="dense"
             id="email"
-            
             label={<CustomLabel>Email Address</CustomLabel>}
             type="email"
             fullWidth
@@ -108,7 +102,6 @@ function UpdateUser({ open, handleClose }) {
             required
             margin="dense"
             id="password"
-           
             label={<CustomLabel>Password</CustomLabel>}
             type="password"
             fullWidth
@@ -119,8 +112,16 @@ function UpdateUser({ open, handleClose }) {
           />
         </DialogContent>
         <DialogActions>
-          <Button onClick={handleClose} sx={{fontSize:"1.2rem"}}>Cancel</Button>
-          <Button type="submit" sx={{fontSize:"1.2rem"}} onClick={handleUpdate}>Update User</Button>
+          <Button onClick={handleClose} sx={{ fontSize: "1.2rem" }}>
+            Cancel
+          </Button>
+          <Button
+            type="submit"
+            sx={{ fontSize: "1.2rem" }}
+            onClick={handleUpdate}
+          >
+            Update User
+          </Button>
         </DialogActions>
       </Dialog>
     </React.Fragment>

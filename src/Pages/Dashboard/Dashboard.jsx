@@ -17,24 +17,18 @@ import { useNavigate } from "react-router-dom";
 import { logoutUser } from "../../Redux/auth/authSlice";
 import UsersDashboard from "../../Components/Dashboard/Users/UsersDashboard";
 // import { logoutUser } from "../../Redux/auth/authSlice";
-import CategoriesDashboard from '../../Components/Dashboard/Categories/CategoriesDashboard'
-import ProductsDashboard from '../../Components/Dashboard/Products/ProductsDashboard'
+import CategoriesDashboard from "../../Components/Dashboard/Categories/CategoriesDashboard";
+import ProductsDashboard from "../../Components/Dashboard/Products/ProductsDashboard";
 
 const drawerWidth = 345;
 
 const Dashboard = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
-  const [selectedSection, setSelectedSection] = useState(null); // State to track selected section
+  const [selectedSection, setSelectedSection] = useState(null);
   const { user, isSuccess, registerUser, allUsers } = useSelector(
     (state) => state.auth
   );
-  // console.log(user, isSuccess, "dahboard page")
-  // const token = user.token;
-  // console.log(token, "dashboard")
-
-  // console.log(allUsers,"all users")
-  // console.log(registerUser, "dahboard register")
 
   const handleSectionChange = (section) => {
     setSelectedSection(section);
@@ -136,7 +130,7 @@ const Dashboard = () => {
           >
             <ListItemText
               primary="Products"
-              sx={{ color: "white", fontSize: "3rem" }} 
+              sx={{ color: "white", fontSize: "3rem" }}
             />
             <Button sx={{ color: "white" }}>
               <KeyboardArrowRightIcon fontSize="large" />
@@ -203,7 +197,7 @@ const Dashboard = () => {
         return <UsersDashboard />;
       case "categories":
         return <CategoriesDashboard />;
- 
+
       default:
         return <UsersDashboard />;
     }
